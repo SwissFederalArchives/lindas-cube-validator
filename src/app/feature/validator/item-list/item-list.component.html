@@ -1,0 +1,21 @@
+<div>
+    <mat-form-field>
+        <mat-label>Filter</mat-label>
+        <input type="text" matInput placeholder="Filter term" [formControl]="searchFormControl" />
+
+        <mat-icon class=" ob-icon" svgIcon="search" matPrefix></mat-icon>
+
+    </mat-form-field>
+
+    <mat-list role="list">
+        @for(i of filteredItems(); track i.iri) {
+        <mat-list-item role="listitem" (click)="selectItem(i.iri)">
+            <p matListItemTitle>{{ i.iri }}</p>
+            <p matListItemLine>{{ i.name }}</p>
+            <p matListItemLine>{{ i.description }}</p>
+        </mat-list-item>
+        }
+
+    </mat-list>
+
+</div>

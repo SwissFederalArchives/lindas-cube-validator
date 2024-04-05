@@ -1,0 +1,11 @@
+<p>{{report().conforms}}</p>
+
+@for(result of report().results; track result) {
+<p>{{result.focusNode}}</p>
+<p>{{result.message}}</p>
+<p>{{result.path}}</p>
+<p>{{result.detail}}</p>
+<p>{{result.sourceConstraintComponent}}</p>
+<p>{{result.sourceShape}}</p>
+
+}

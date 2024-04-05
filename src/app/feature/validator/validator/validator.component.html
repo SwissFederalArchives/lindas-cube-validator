@@ -1,0 +1,6 @@
+<button mat-button obButton="tertiary" type="button" routerLink="../..">
+    <mat-icon svgIcon="arrow-left" /> {{'navigation.back' | translate}}
+</button>
+@if(report() !== undefined) {
+<cube-validation-report [report]="report()!" />
+}
