@@ -61,7 +61,7 @@ export class ValidatorInputComponent {
           name: cube.nameDE ?? cube.name ?? cube.nameEN ?? cube.nameFR ?? cube.nameIT ?? 'kein Name',
           iri: cube.iri,
           description: cube.descriptionDE ?? cube.description ?? cube.descriptionEN ?? cube.descriptionFR ?? cube.descriptionIT ?? 'Keine Beschreibung',
-          datePublished: cube.datePublished ?? 'kein Datum',
+          datePublished: cube.datePublished ?? 'Kein Datum',
           searchField: ''
         }
       }
@@ -124,7 +124,6 @@ export class ValidatorInputComponent {
   }
 
   loadCubes(): void {
-    console.log('loadCubes');
     if (this.endpointFormControl.invalid || this.endpointFormControl.value === null) {
       console.log('invalid endpoint', this.endpointFormControl.invalid, this.endpointFormControl.value);
       return;
