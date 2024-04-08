@@ -1,6 +1,6 @@
-<div role="listitem" class="list-item" (click)="selectItem(cube().iri)">
+<div role="listitem" class="list-item">
     <p class="date">{{cube().datePublished }}</p>
-    <div class="title">{{ cube().name }}</div>
+    <div class="title" (click)="selectItem(cube().iri)">{{ cube().name }}</div>
     <div class="iri">&lt;{{ cube().iri }}&gt;</div>
     <div class="description" [matTooltip]="cube().description" [matTooltipShowDelay]="1000">{{ cube().description }}
     </div>
