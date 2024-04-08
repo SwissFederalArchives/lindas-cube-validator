@@ -7,11 +7,13 @@
 
     </mat-form-field>
 
-    <mat-list role="list">
-        @for(i of filteredItems(); track i.iri) {
-        <cube-list-item [cube]="i" (selected)="selectItem($event)" />
-        }
 
-    </mat-list>
+    <div class="summary">
+        Cubes {{filteredItems().length}}
+    </div>
+    @for(i of filteredItems(); track i.iri) {
+    <cube-list-item [cube]="i" (selected)="selectItem($event)" />
+    }
+
 
 </div>

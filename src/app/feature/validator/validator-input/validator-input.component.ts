@@ -6,7 +6,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 
 
-import { ObFormFieldModule, ObIconModule, ObLanguageService } from '@oblique/oblique';
+import { ObDatePipe, ObFormFieldModule, ObIconModule, ObLanguageService } from '@oblique/oblique';
 import { EndpointService } from '../../../core/service/endpoint/endpoint.service';
 import { catchError, map, switchMap } from 'rxjs/operators';
 import { of } from 'rxjs';
@@ -53,6 +53,8 @@ export class ValidatorInputComponent {
   cubes = computed<CubeItem[]>(() => {
     const lang = this.language() ?? 'de';
     const cubes = this.multiLanguageCubes();
+    const datePipe = new ObDatePipe(this.languageService);
+
 
     // create a language specific cube items
     const items = cubes.map(cube => {
@@ -61,7 +63,7 @@ export class ValidatorInputComponent {
           name: cube.nameDE ?? cube.name ?? cube.nameEN ?? cube.nameFR ?? cube.nameIT ?? 'kein Name',
           iri: cube.iri,
           description: cube.descriptionDE ?? cube.description ?? cube.descriptionEN ?? cube.descriptionFR ?? cube.descriptionIT ?? 'Keine Beschreibung',
-          datePublished: cube.datePublished ?? 'Kein Datum',
+          datePublished: cube.datePublished ? datePipe.transform(cube.datePublished).split(' ')[0] : 'Kein Datum',
           searchField: ''
         }
       }
@@ -70,7 +72,7 @@ export class ValidatorInputComponent {
           name: cube.nameFR ?? cube.name ?? cube.nameEN ?? cube.nameDE ?? cube.nameIT ?? 'Pas de nom',
           iri: cube.iri,
           description: cube.descriptionFR ?? cube.description ?? cube.descriptionEN ?? cube.descriptionDE ?? cube.descriptionIT ?? 'Pas de description',
-          datePublished: cube.datePublished ?? 'Pas de date',
+          datePublished: cube.datePublished ? datePipe.transform(cube.datePublished).split(' ')[0] : 'Pas de date',
           searchField: ''
         }
       }
@@ -79,7 +81,7 @@ export class ValidatorInputComponent {
           name: cube.nameIT ?? cube.name ?? cube.nameEN ?? cube.nameDE ?? cube.nameFR ?? 'Nessun nome',
           iri: cube.iri,
           description: cube.descriptionIT ?? cube.description ?? cube.descriptionEN ?? cube.descriptionDE ?? cube.descriptionFR ?? 'Nessuna descrizione',
-          datePublished: cube.datePublished ?? 'Nessuna data',
+          datePublished: cube.datePublished ? datePipe.transform(cube.datePublished).split(' ')[0] : 'Nessuna data',
           searchField: ''
         }
       }
@@ -88,7 +90,7 @@ export class ValidatorInputComponent {
         name: cube.nameEN ?? cube.name ?? cube.nameDE ?? cube.nameFR ?? cube.nameIT ?? 'No name',
         iri: cube.iri,
         description: cube.descriptionEN ?? cube.description ?? cube.descriptionDE ?? cube.descriptionFR ?? cube.descriptionFR ?? 'No description',
-        datePublished: cube.datePublished ?? 'No date',
+        datePublished: cube.datePublished ? datePipe.transform(cube.datePublished).split(' ')[0] : 'No date',
         searchField: ''
       }
     });

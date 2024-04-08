@@ -13,7 +13,7 @@ export class MultiLanguageCubeItem extends ClownfaceObject {
     private _descriptionDE: string | null | undefined = undefined;
     private _descriptionFR: string | null | undefined = undefined;
     private _descriptionIT: string | null | undefined = undefined;
-    private _datePublished: string | null | undefined = undefined;
+    private _datePublished: Date | null | undefined = undefined;
 
     constructor(node: GraphPointer) {
         super(node);
@@ -139,14 +139,14 @@ export class MultiLanguageCubeItem extends ClownfaceObject {
         return this._descriptionIT;
     }
 
-    get datePublished(): string | null {
+    get datePublished(): Date | null {
         if (this._datePublished === undefined) {
             const dates = this._node.out(schema['datePublished']).values;
             if (dates.length === 0) {
                 this._datePublished = null;
             } else {
                 const date = new Date(dates[0]);
-                this._datePublished = date.toLocaleDateString();
+                this._datePublished = date;
             }
         }
         return this._datePublished;

@@ -1,11 +1,12 @@
 import { Component, input, output } from '@angular/core';
 import { CubeItem } from '../model/cube-item';
-import { MatListModule } from '@angular/material/list';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { ObLanguageModule } from '@oblique/oblique';
 
 @Component({
   selector: 'cube-list-item',
   standalone: true,
-  imports: [MatListModule],
+  imports: [MatTooltipModule],
   templateUrl: './list-item.component.html',
   styleUrl: './list-item.component.scss'
 })
