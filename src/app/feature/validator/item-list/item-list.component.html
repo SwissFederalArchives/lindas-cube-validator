@@ -9,12 +9,7 @@
 
     <mat-list role="list">
         @for(i of filteredItems(); track i.iri) {
-        <mat-list-item role="listitem" (click)="selectItem(i.iri)">
-            <p matListItemTitle>{{ i.iri }}</p>
-            <p matListItemLine>{{ i.name }}</p>
-            <p matListItemLine>{{ i.description }}</p>
-
-        </mat-list-item>
+        <cube-list-item [cube]="i" (selected)="selectItem($event)" />
         }
 
     </mat-list>

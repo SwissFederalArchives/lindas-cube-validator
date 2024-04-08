@@ -11,10 +11,13 @@ import { CubeItem } from '../model/cube-item';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { takeUntilDestroyed, toSignal } from '@angular/core/rxjs-interop';
 import { debounceTime, distinctUntilChanged } from 'rxjs';
+import { ListItemComponent } from "../list-item/list-item.component";
 
 @Component({
   selector: 'cube-item-list',
   standalone: true,
+  templateUrl: './item-list.component.html',
+  styleUrl: './item-list.component.scss',
   imports: [
     ReactiveFormsModule,
     MatListModule,
@@ -22,10 +25,9 @@ import { debounceTime, distinctUntilChanged } from 'rxjs';
     MatIconModule,
     MatInputModule,
     ObIconModule,
-    ObFormFieldModule
-  ],
-  templateUrl: './item-list.component.html',
-  styleUrl: './item-list.component.scss'
+    ObFormFieldModule,
+    ListItemComponent
+  ]
 })
 export class ItemListComponent {
   items = input.required<CubeItem[]>();
