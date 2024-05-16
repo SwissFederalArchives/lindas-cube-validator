@@ -1,0 +1,10 @@
+<mat-form-field>
+    <mat-label>Validation Profile</mat-label>
+    <mat-select [value]="selectedProfileIri()" (selectionChange)="selectionChanged($event)">
+        @for(profile of profiles(); track profile) {
+        <mat-option [value]="profile.value">
+            {{profile.label}}
+        </mat-option>
+        }
+    </mat-select>
+</mat-form-field>

@@ -10,6 +10,7 @@ construct {
     {
         SELECT ?cube WHERE {
             ?cube a cube:Cube .
+            FILTER NOT EXISTS { ?cube schema:expires ?expires }
         }
     }
     VALUES ?p { 

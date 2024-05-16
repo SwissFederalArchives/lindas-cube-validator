@@ -1,22 +1,36 @@
 import { Injectable, inject } from '@angular/core';
-import { SparqlService } from '../sparql/sparql.service';
-import { Observable, forkJoin, map } from 'rxjs';
+import { GraphResult, SparqlService } from '../sparql/sparql.service';
+import { ProfileService } from '../profile/profile.service';
+import { Observable, forkJoin, map, switchMap, expand, EMPTY, tap, takeUntil } from 'rxjs';
 
 // queries
 import { CONSTRUCT_CUBE_ITEMS } from './query/get-cube-items';
 import { MultiLanguageCubeItem } from './model/cube-item';
 import { rdfEnvironment } from '../../rdf/rdf-environment';
 import { cube } from '../../rdf/namespace';
-import { getDataGraphForCube, getShapeGraphForCube } from './query/get-cube-shapes';
+import { getShapeGraphForCube } from './query/get-cube-shapes';
 import { Dataset } from '@zazuko/env/lib/DatasetExt';
 import Validator from 'rdf-validate-shacl';
 import ValidationReport from 'rdf-validate-shacl/src/validation-report';
+import { CubeDefinition } from '../../model/cube-definition/cube-definition';
+import { ValidationProfile } from '../../constant/validation-profile';
+import { getOneObservation } from './query/get-one-observation';
+import { dbo } from '@tpluscode/rdf-ns-builders';
 
 @Injectable({
   providedIn: 'root'
 })
 export class EndpointService {
   private readonly sparqlService = inject(SparqlService);
+  private readonly profileService = inject(ProfileService);
+
+  private readonly profile = this.profileService.getVisualizeProfile();
+
+  readonly maxValidationErrors = 20;
+  readonly maxPages = 10;
+
+  public lastUsedEndpoint: string = '';
+
   constructor() { }
 
   isOnline(endpointUrl: string): Observable<boolean> {
@@ -26,28 +40,132 @@ export class EndpointService {
   }
 
   getCubes(endpointUrl: string): Observable<MultiLanguageCubeItem[]> {
+    this.lastUsedEndpoint = endpointUrl;
     return this.sparqlService.construct(endpointUrl, CONSTRUCT_CUBE_ITEMS).pipe(
       map(cubeItemDataset => {
-        const cubeItems = rdfEnvironment.clownface({ dataset: cubeItemDataset }).node(cube['Cube']).in().map(node => new MultiLanguageCubeItem(node));
+        const cubeItems = rdfEnvironment.clownface({ dataset: cubeItemDataset.dataset }).node(cube['Cube']).in().map(node => new MultiLanguageCubeItem(node));
         return cubeItems;
 
       }),
     );
   }
 
-  getValidationReport(endpointUrl: string, cubeIri: string): Observable<ValidationReport> {
-    const shapeGraphQuery = this.sparqlService.construct(endpointUrl, getShapeGraphForCube(cubeIri));
-    const dataGraphQuery = this.sparqlService.construct(endpointUrl, getDataGraphForCube(cubeIri));
+  getCube(endpointUrl: string, cubeIri: string): Observable<GraphResult> {
+    this.lastUsedEndpoint = endpointUrl;
+    return this.sparqlService.construct(endpointUrl, getShapeGraphForCube(cubeIri))
 
-    return forkJoin([shapeGraphQuery, dataGraphQuery]).pipe(
-      map(([shapeGraph, dataGraph]) => {
-        const validator = new Validator(shapeGraph, { factory: rdfEnvironment });
-        const report = validator.validate(dataGraph);
-        return report
+  }
+
+  getValidationReportForProfile(endpointUrl: string, cubeIri: string, profile: ValidationProfile): Observable<CubeValidationResult> {
+    this.lastUsedEndpoint = endpointUrl;
+    const shapeGraphQuery = this.profileService.getProfile(profile);
+    const dataGraphQuery = this.sparqlService.construct(endpointUrl, getShapeGraphForCube(cubeIri));
+    const singleObservationQuery = this.sparqlService.construct(endpointUrl, getOneObservation(cubeIri));
+
+    return forkJoin([shapeGraphQuery, dataGraphQuery, singleObservationQuery]).pipe(
+      map(([shapeGraph, dataGraph, singleObservationGraph]) => {
+        // add a single observation to the dataGraph in order to avoid empty observation sets
+        // this is a workaround to avoid a warning in the validator that the observation set is empty
+        dataGraph.dataset.addAll(singleObservationGraph.dataset);
+        const validator = new Validator(shapeGraph.dataset, { factory: rdfEnvironment });
+        const report = validator.validate(dataGraph.dataset);
+        return {
+          shapeGraph: shapeGraph.dataset,
+          shapeGraphSerialized: shapeGraph.profileSerialized,
+          dataGraph: dataGraph.dataset,
+          dataGraphSerialized: dataGraph.serialized,
+          report: report
+        }
       }
       )
     );
   }
+
+  /**
+   * The sh:targetClass is not set in the cube constraint dataset. To avoid matching all observations
+   * in the triple store. This method sets the sh:targetClass to https://cube.link/Observation
+   * 
+   * @param shape the cube constraint dataset
+   */
+  private _updateDatasetWithTarget(shape: Dataset): void {
+    const constraint = rdfEnvironment.clownface({ dataset: shape, term: rdfEnvironment.namedNode('https://cube.link/Constraint') }).in(rdfEnvironment.ns.rdf.type)
+    if (!constraint.term) {
+      throw new Error('could not find a unique constraint')
+    }
+    constraint.addOut(rdfEnvironment.ns.sh.targetClass, rdfEnvironment.namedNode('https://cube.link/Observation'));
+
+  }
+
+  /**
+   * ValidationReport
+   */
+  getObservationValidationJunkedReport(endpointUrl: string, cubeIri: string, chunkSize: number): Observable<ValidationReport> {
+    this.lastUsedEndpoint = endpointUrl;
+    const shapeGraphQuery = this.sparqlService.construct(endpointUrl, getShapeGraphForCube(cubeIri));
+
+    let page = 0;
+    const shapeGraph = rdfEnvironment.dataset();
+    let validator: Validator;
+    let countValidationErrors = 0;
+
+    return shapeGraphQuery.pipe(
+      switchMap(x => {
+        shapeGraph.addAll(x.dataset);
+        this._updateDatasetWithTarget(shapeGraph);
+        validator = new Validator(shapeGraph, { factory: rdfEnvironment });
+        return this.fetchObservablePageQuery(endpointUrl, cubeIri, 0, chunkSize);
+      }),
+      expand(response => {
+        if (response.dataset.size > 1 && countValidationErrors < this.maxValidationErrors && page < this.maxPages) {
+          return this.fetchObservablePageQuery(endpointUrl, cubeIri, ++page, chunkSize);
+        }
+        return EMPTY;
+      }
+      ),
+      map(result => {
+        const report = validator.validate(result.dataset);
+        countValidationErrors += report.results.length;
+        return report;
+      }),
+    )
+
+  }
+
+
+
+
+  fetchObservablePageQuery(endpointUrl: string, cubeIri: string, page: number, chunkSize: number): Observable<GraphResult> {
+    this.lastUsedEndpoint = endpointUrl;
+
+    const query = `
+    PREFIX cube: <https://cube.link/>
+  
+    CONSTRUCT {
+      ?observation ?p ?o.
+      } WHERE {
+        {
+          SELECT ?observation WHERE {
+            <${cubeIri}> cube:observationSet/ cube:observation ?observation.
+          } LIMIT ${chunkSize} OFFSET ${page * chunkSize} 
+        }
+        ?observation ?p ?o.
+      }
+      
+      `;
+
+    return this.sparqlService.construct(endpointUrl, query)
+  }
 }
+
+
+
+export interface CubeValidationResult {
+  shapeGraph: Dataset;
+  shapeGraphSerialized: string;
+  dataGraph: Dataset;
+  dataGraphSerialized: string;
+  report: ValidationReport;
+}
+
 
 

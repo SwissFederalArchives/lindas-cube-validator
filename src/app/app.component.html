@@ -1,7 +1,6 @@
-<ob-master-layout [navigation]="[{ url: 'validator', label: 'Validator' }]">
+<ob-master-layout [navigation]="[{ url: '/', label: 'Validator' }]">
 	<ng-container obHeaderTitle>Cube Validator</ng-container>
 	<ng-container obFooterInfo>
-		<p>Oblique's footer</p>
-		<p>&copy; 2020 <span>{{ "i18n.oblique.footer.title" | translate }}</span></p>
+		<p>{{'footer.title' | translate}}</p>
 	</ng-container>
 </ob-master-layout>

@@ -29,6 +29,7 @@ registerLocaleData(localeENGBB);
   ],
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
     AppRoutingModule,
     ObMasterLayoutModule,
     BrowserAnimationsModule,

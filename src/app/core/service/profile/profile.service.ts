@@ -1,0 +1,64 @@
+import { Injectable, inject } from '@angular/core';
+import { Observable, from, map, switchMap } from 'rxjs';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+
+import { rdfEnvironment } from '../../rdf/rdf-environment'
+import { Dataset } from '@zazuko/env/lib/DatasetExt';
+import { ValidationProfile } from '../../constant/validation-profile';
+import transform from 'rdf-transform-graph-imports'
+
+const RDF_MIME_TYPE = 'text/turtle';
+
+@Injectable({
+  providedIn: 'root'
+})
+export class ProfileService {
+  private readonly http = inject(HttpClient);
+
+  constructor() { }
+
+  /*
+  getDefaultProfile(): Observable<ValidationProfileData> {
+    return this.get('https://cube.link/ref/main/shape/standalone-cube-constraint');
+  }
+
+  getOpenSwissProfile(): Observable<ValidationProfileData> {
+    return this.get('https://cube.link/ref/main/shape/profile-opendataswiss.ttl');
+  }
+  */
+
+  /**
+   *
+   * @deprecated
+   */
+  getVisualizeProfile(): Observable<ValidationProfileData> {
+    return this._get('https://cube.link/ref/main/shape/profile-visualize');
+  }
+
+
+
+  getProfile(profile: ValidationProfile): Observable<ValidationProfileData> {
+    return this._get(profile.value);
+  }
+
+
+  private _get(profileUrl: string): Observable<ValidationProfileData> {
+
+    const fetchProfile = async () => {
+      const response = await rdfEnvironment.fetch(profileUrl);
+      const parsed = await response.quadStream() as any;
+      const transformed = parsed.pipe(transform(rdfEnvironment))
+      const dataset = await rdfEnvironment.dataset().import(transformed)
+      const profileSerialized = dataset.toCanonical()
+      return { dataset, profileSerialized }
+    }
+
+    return from(fetchProfile())
+
+  }
+}
+
+export interface ValidationProfileData {
+  dataset: Dataset;
+  profileSerialized: string;
+}
