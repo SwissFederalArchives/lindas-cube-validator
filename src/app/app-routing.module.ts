@@ -1,25 +1,30 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { ObUnknownRouteModule } from '@oblique/oblique';
-import { HomeComponent } from './home/home.component';
 
 const routes: Routes = [
   {
-    path: '', redirectTo: 'validator',
+    path: '', redirectTo: 'select',
     pathMatch: 'full'
   },
   {
-    path: 'home', component: HomeComponent
+    path: 'select',
+    loadChildren: () => import('./feature/cube-selection/routes').then(m => m.routes)
   },
   {
-    path: 'validator',
+    path: 'validate',
     loadChildren: () => import('./feature/validator/routes').then(m => m.routes)
-  },
+  }
   // { path: '**', redirectTo: 'unknown-route' }
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes, { bindToComponentInputs: true }), ObUnknownRouteModule],
+  imports: [RouterModule.forRoot(routes, {
+    bindToComponentInputs: true,
+    scrollOffset: [0, 0],
+    scrollPositionRestoration: 'disabled',
+    anchorScrolling: 'enabled'
+  }), ObUnknownRouteModule],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }

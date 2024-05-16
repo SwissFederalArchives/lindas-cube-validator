@@ -5,20 +5,9 @@ export function getShapeGraphForCube(cubeIri: string) {
 
     PREFIX cube: <https://cube.link/>
 
-    DESCRIBE ?s
+    DESCRIBE ?s ?cube
     WHERE {
-      <${cubeIri}> cube:observationConstraint ?s .
+		  BIND(<${cubeIri}> AS ?cube)
+      ?cube cube:observationConstraint ?s .
     }`;
-}
-
-export function getDataGraphForCube(cubeIri: string) {
-  return `
-  PREFIX cube: <https://cube.link/>
-
-  CONSTRUCT { ?s ?p ?o }
-  WHERE {
-    <${cubeIri}> cube:observationSet/cube:observation ?s .
-    ?s ?p ?o
-  }`;
-
 }

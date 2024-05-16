@@ -1,11 +1,43 @@
-<p>{{report().conforms}}</p>
+@if(!report().conforms) {
 
-@for(result of report().results; track result) {
-<p>{{result.focusNode}}</p>
-<p>{{result.message}}</p>
-<p>{{result.path}}</p>
-<p>{{result.detail}}</p>
-<p>{{result.sourceConstraintComponent}}</p>
-<p>{{result.sourceShape}}</p>
+<table class="ob-table ob-table-sm">
+        <caption>
+                Validation Report
+        </caption>
+        <thead>
+                <tr>
+                        <th>Focus Node</th>
+                        <th>Severity</th>
+                        <th>Path</th>
+                        <th>Message</th>
+                        <th>Value</th>
+                </tr>
+        </thead>
+        <tbody>
+                @for(result of report().results; track result) {
 
+                <tr>
+                        <th>
+                                <a target="_blank"
+                                        [href]="result.focusNode?.value ?? ''">&lt;{{result.focusNode?.value}}&gt;</a>
+                        </th>
+                        <th>
+                                <cube-severity [severity]="result.severity?.value" />
+                        </th>
+                        <td><a [href]="result.path?.value ?? ''" target="_blank">&lt;{{result.path?.value}}&gt;</a>
+                        </td>
+                        <td>
+
+                                @for(m of result.message; track m) {
+                                <div>Message: {{m.value}}</div>
+                                }
+                        </td>
+                        <td>
+                                {{result.value?.value ?? ''}}
+                        </td>
+                </tr>
+                }
+
+        </tbody>
+</table>
 }

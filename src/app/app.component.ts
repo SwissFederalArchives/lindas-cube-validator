@@ -11,7 +11,7 @@ export class AppComponent {
   private readonly obMasterLayoutConfig = inject(ObMasterLayoutConfig);
   constructor() {
     this.obMasterLayoutConfig.locale.locales = ['de-CH', 'fr-CH', 'it-CH', 'en-GB']; //  'en-GB',
-
+    this.obMasterLayoutConfig.homePageRoute = '/';
 
   }
 

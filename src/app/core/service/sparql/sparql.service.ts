@@ -7,7 +7,8 @@ import { rdfEnvironment } from '../../rdf/rdf-environment'
 import { Dataset } from '@zazuko/env/lib/DatasetExt';
 import toStream from 'string-to-stream';
 
-const RDF_MIME_TYPE = 'application/n-triples';
+// const RDF_MIME_TYPE = 'application/n-triples';
+const RDF_MIME_TYPE = 'text/turtle';
 
 @Injectable({
   providedIn: 'root'
@@ -41,7 +42,7 @@ export class SparqlService {
     return this.http.post<SparqlResult>(endpointUrl, body.toString(), options);
   }
 
-  construct(endpointUrl: string, query: string): Observable<Dataset> {
+  construct(endpointUrl: string, query: string): Observable<GraphResult> {
     const headers = new HttpHeaders({
       'Content-Type': 'application/x-www-form-urlencoded',
       'Accept': RDF_MIME_TYPE
@@ -56,9 +57,11 @@ export class SparqlService {
       responseType: 'text' as const
     };
 
+    let serializedData = '';
 
     return this.http.post(endpointUrl, body.toString(), options).pipe(
       switchMap(data => {
+        serializedData = data;
         const stream = toStream(data);
         const quadStream = rdfEnvironment.formats.parsers.import(RDF_MIME_TYPE, stream)
         if (!quadStream) {
@@ -66,7 +69,19 @@ export class SparqlService {
         }
         return from(rdfEnvironment.dataset().import(quadStream));
       }
-      )
+      ),
+      map(dataset => {
+        return {
+          dataset,
+          serialized: serializedData
+        };
+      })
     );
   }
+}
+
+
+export interface GraphResult {
+  dataset: Dataset;
+  serialized: string;
 }
