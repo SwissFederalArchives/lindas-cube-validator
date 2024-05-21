@@ -1,0 +1,15 @@
+image: node:lts
+
+
+before_script:
+  - npm ci
+
+pages:
+  script:
+    - npm run build
+  artifacts:
+    expose_as: 'public'
+    paths:
+      - dist
+ # rules:
+  #  - if: $CI_COMMIT_REF_NAME == $CI_DEFAULT_BRANCH
