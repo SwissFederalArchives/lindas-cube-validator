@@ -5,10 +5,10 @@ before_script:
   - npm ci
 
 pages:
+  publish: dist
   script:
     - npm run build
   artifacts:
-    expose_as: 'public'
     paths:
       - dist
   rules:
