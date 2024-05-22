@@ -29,6 +29,7 @@ import { animate, state, style, transition, trigger } from '@angular/animations'
 export class CubeConstraintsValidationReportComponent {
   report = input.required<ValidationReport>();
 
+
   cubeColumnsToDisplay = ['Path', 'Message', 'Value', 'Severity'];
 
   dimensionColumnsToDisplay = ['Dimension', 'Message', 'Severity'];
@@ -45,8 +46,8 @@ export class CubeConstraintsValidationReportComponent {
 
     const results = rdfEnvironment.clownface({ dataset }).node(sh['ValidationResult']).in(rdf['type']).map(n => new ValidationResult(n)).filter(result => result.isAboutCube());
 
-
-    return results;
+    const resultWithDetails = results.flatMap(result => [result, ...result.detail]);
+    return resultWithDetails;
   }
   );
 
@@ -56,7 +57,9 @@ export class CubeConstraintsValidationReportComponent {
       return [];
     }
 
-    return rdfEnvironment.clownface({ dataset }).node(sh['ValidationResult']).in(rdf['type']).map(n => new ValidationResult(n)).filter(result => result.isAboutDimensions());
+    const results = rdfEnvironment.clownface({ dataset }).node(sh['ValidationResult']).in(rdf['type']).map(n => new ValidationResult(n)).filter(result => result.isAboutDimensions());
+    const resultWithDetails = results.flatMap(result => [result, ...result.detail]);
+    return resultWithDetails;
   }
   );
 
