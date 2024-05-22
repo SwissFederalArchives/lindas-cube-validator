@@ -140,7 +140,9 @@ export class ValidationResult extends ClownfaceObject {
     }
 
     isAboutDimensions(): boolean {
-        return this._node.out(sh['focusNode']).has(rdf['type'], cube['Constraint']).values.length > 0;
+        const isCubeConstraint = this._node.out(sh['focusNode']).has(rdf['type'], cube['Constraint']).values.length > 0;
+        const isDimension = this._node.out(sh['focusNode']).in(sh['property']).has(rdf['type'], cube['Constraint']).values.length > 0;
+        return isCubeConstraint || isDimension;
     }
 
 
