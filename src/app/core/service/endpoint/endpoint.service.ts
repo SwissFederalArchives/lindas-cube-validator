@@ -12,10 +12,8 @@ import { getShapeGraphForCube } from './query/get-cube-shapes';
 import { Dataset } from '@zazuko/env/lib/DatasetExt';
 import Validator from 'rdf-validate-shacl';
 import ValidationReport from 'rdf-validate-shacl/src/validation-report';
-import { CubeDefinition } from '../../model/cube-definition/cube-definition';
 import { ValidationProfile } from '../../constant/validation-profile';
 import { getOneObservation } from './query/get-one-observation';
-import { dbo } from '@tpluscode/rdf-ns-builders';
 
 @Injectable({
   providedIn: 'root'
