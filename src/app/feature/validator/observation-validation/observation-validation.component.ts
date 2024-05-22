@@ -104,10 +104,6 @@ export class ObservationValidationComponent {
 
 }
 
-
-
-
-
 @Component({
   selector: 'dialog-elements-example-dialog',
   templateUrl: './describe-observation-validation.html',

@@ -13,6 +13,8 @@ export class ValidationResult extends ClownfaceObject {
     private _literalValue: string | undefined | null = undefined;
     private _nodeValue: ClownfaceObject | null | undefined = undefined;
     private _dimensionValue: ResultDimension | undefined | null = undefined;
+    private _detail: ValidationResultDetail[] | null = null;
+
     constructor(node: GraphPointer) {
         super(node);
     }
@@ -52,7 +54,10 @@ export class ValidationResult extends ClownfaceObject {
     }
 
     get detail(): ValidationResult[] {
-        return this._node.out(sh['detail']).map(n => new ValidationResult(n));
+        if (this._detail === null) {
+            this._detail = this._node.out(sh['detail']).map(n => new ValidationResultDetail(n));
+        }
+        return this._detail;
     }
 
     get severity(): string | null {
@@ -143,6 +148,30 @@ export class ValidationResult extends ClownfaceObject {
         const isCubeConstraint = this._node.out(sh['focusNode']).has(rdf['type'], cube['Constraint']).values.length > 0;
         const isDimension = this._node.out(sh['focusNode']).in(sh['property']).has(rdf['type'], cube['Constraint']).values.length > 0;
         return isCubeConstraint || isDimension;
+    }
+
+
+}
+
+export class ValidationResultDetail extends ValidationResult {
+    private _otherDimensionValue: ResultDimension | undefined | null = undefined;
+
+    constructor(node: GraphPointer) {
+        super(node);
+    }
+    override get dimensionValue(): ResultDimension | null {
+        if (this._otherDimensionValue === undefined) {
+            const dimensionValues = this._node.out(sh['focusNode']);
+            if (dimensionValues.values.length === 0) {
+                this._otherDimensionValue = null;
+            } else {
+                if (dimensionValues.values.length > 1) {
+                    console.warn('Multiple dimension values found for validation result. Using the first one.');
+                }
+                this._otherDimensionValue = new ResultDimension(dimensionValues.toArray()[0]);
+            }
+        }
+        return this._otherDimensionValue;
     }
 
 
