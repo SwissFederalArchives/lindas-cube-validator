@@ -8,6 +8,8 @@ export function getShapeGraphForCube(cubeIri: string) {
     DESCRIBE ?s ?cube
     WHERE {
 		  BIND(<${cubeIri}> AS ?cube)
+      OPTIONAL {
       ?cube cube:observationConstraint ?s .
+      }
     }`;
 }
