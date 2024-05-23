@@ -88,10 +88,10 @@ export class EndpointService {
   private _updateDatasetWithTarget(shape: Dataset): void {
     const constraint = rdfEnvironment.clownface({ dataset: shape, term: rdfEnvironment.namedNode('https://cube.link/Constraint') }).in(rdfEnvironment.ns.rdf.type)
     if (!constraint.term) {
-      throw new Error('could not find a unique constraint')
+      console.warn('could not find a constraint. This is means that the cube does not have a constraint. This is not a mistake but the cube is not validated against a constraint.');
+      return;
     }
     constraint.addOut(rdfEnvironment.ns.sh.targetClass, rdfEnvironment.namedNode('https://cube.link/Observation'));
-
   }
 
   /**

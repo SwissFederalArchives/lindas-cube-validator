@@ -28,5 +28,11 @@
     "language": "sparql",
     "value": "#pragma describe.strategy cbd\nPREFIX cube: <https://cube.link/>\n\nDESCRIBE ?s ?cube WHERE {\n    BIND(<https://energy.ld.admin.ch/elcom/electricityprice-swiss> AS ?cube)\n    OPTIONAL { ?cube cube:observationConstraint ?s .}\n}",
     "metadata": {}
+  },
+  {
+    "kind": 1,
+    "language": "markdown",
+    "value": "## Issue 3.2\n\nThe Observation validation throws an error because the cube:observationConstraint is missing.",
+    "metadata": {}
   }
 ]
