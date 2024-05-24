@@ -7,7 +7,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatIconModule } from '@angular/material/icon';
 
-import { catchError, delay, filter, map, of, startWith, switchMap } from 'rxjs';
+import { catchError, filter, map, of, switchMap } from 'rxjs';
 
 import { TranslateModule } from '@ngx-translate/core';
 
@@ -24,11 +24,14 @@ import { EndpointService } from '../../../core/service/endpoint/endpoint.service
 import { Dataset } from '@zazuko/env/lib/DatasetExt';
 import { CubeDefinition } from '../../../core/model/cube-definition/cube-definition';
 import { rdfEnvironment } from '../../../core/rdf/rdf-environment';
+import { Barnard59CliCommandComponent } from "../../../core/component/barnard59-cli-command/barnard59-cli-command.component";
 
 @Component({
   standalone: true,
   templateUrl: './validator.component.html',
   styleUrl: './validator.component.scss',
+  animations: [FadeInOut(300, 200)],
+  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     RouterLink,
     RouterLinkActive,
@@ -43,10 +46,9 @@ import { rdfEnvironment } from '../../../core/rdf/rdf-environment';
     ValidationReportComponent,
     CubeDescriptionComponent,
     CubeValidationComponent,
-    ObservationValidationComponent
-  ],
-  animations: [FadeInOut(300, 200)],
-  changeDetection: ChangeDetectionStrategy.OnPush
+    ObservationValidationComponent,
+    Barnard59CliCommandComponent
+  ]
 })
 /**
  * Represents a component used for validating a cube.

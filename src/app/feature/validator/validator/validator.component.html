@@ -4,17 +4,20 @@
 <div>
     <cube-cube-description [cube]="cubeDefinition()" (profileSelected)="updateValidationProfile($event)"
         [selectedProfileIri]="currentProfile()?.value" [@fadeInOut] />
-
     <ob-spinner [channel]="'cube'" />
 </div>
 <mat-tab-group [selectedIndex]="currentTabIndex()" (selectedIndexChange)="changeTab($event)" preserveContent>
     <mat-tab label="Cube">
         @if(!isCubeValidationRunning() && cubeValidationReport()) {
         <cube-validation [report]="cubeValidationReport()!" />
-
+        <cube-barnard59-cli-command [cubeIri]="cubeIri()" [endpoint]="endpoint()"
+            [validationProfileUrl]="currentProfile()?.value!" />
         } @else {
         <h1>Running</h1>
         }
+
+
+
     </mat-tab>
     <mat-tab label="Observation">
 

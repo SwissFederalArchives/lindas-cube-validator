@@ -22,8 +22,7 @@
 
     @if(report()?.report !== undefined) {
     <cube-constraints-validation-report [report]="report()?.report!" [@fadeInOut] />
-    <cube-playground-link [playgroundLink]="playgroundLink()"></cube-playground-link>
-
+    <cube-playground-link [playgroundLink]="playgroundLink()" />
     }
     <ob-spinner channel="load-validation-report" [@fadeInOut] />
 </div>
