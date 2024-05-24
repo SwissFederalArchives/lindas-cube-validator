@@ -58,7 +58,8 @@ export class CubeConstraintsValidationReportComponent {
     }
 
     const results = rdfEnvironment.clownface({ dataset }).node(sh['ValidationResult']).in(rdf['type']).map(n => new ValidationResult(n)).filter(result => result.isAboutDimensions());
-    const resultWithDetails = results.flatMap(result => [result, ...result.detail]);
+    const detailIris = results.flatMap(result => result.detail.map(detail => detail.iri));
+    const resultWithDetails = results.filter(r => !detailIris.includes(r.iri)).flatMap(result => [result, ...result.detail]);
     return resultWithDetails;
   }
   );
