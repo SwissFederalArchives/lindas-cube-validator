@@ -8,7 +8,8 @@
     <ob-spinner [channel]="'cube'" />
 </div>
 
-<mat-tab-group [selectedIndex]="currentTabIndex()" (selectedIndexChange)="changeTab($event)" preserveContent>
+<mat-tab-group dynamicHeight [selectedIndex]="currentTabIndex()" (selectedIndexChange)="changeTab($event)"
+    preserveContent>
     <mat-tab label="Cube">
         @if(!isCubeValidationRunning() && cubeValidationReport()) {
         <cube-validation [report]="cubeValidationReport()!" />
@@ -20,7 +21,6 @@
         } @else {
         <h1>Running</h1>
         }
-
 
 
     </mat-tab>
