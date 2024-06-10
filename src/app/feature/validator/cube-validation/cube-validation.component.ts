@@ -14,7 +14,7 @@ import { FadeInOut } from '../../../core/animation/fade-in-out';
 import { ConformsIndicatorComponent } from "../conforms-indicator/conforms-indicator.component";
 import { CubeConstraintsValidationReportComponent } from "../cube-constraints-validation-report/cube-constraints-validation-report.component";
 import { PlaygroundLinkComponent } from '../../../core/component/playground-link/playground-link.component';
-import { Barnard59CliCommandComponent } from "../../../core/component/barnard59-cli-command/barnard59-cli-command.component";
+import { CubeValidationBarnard59CliCommandComponent } from '../../../core/component/cub-validation-barnard59-cli-command/cub-validation-barnard59-cli-command.component';
 
 @Component({
   selector: 'cube-validation',
@@ -33,7 +33,7 @@ import { Barnard59CliCommandComponent } from "../../../core/component/barnard59-
     ConformsIndicatorComponent,
     CubeConstraintsValidationReportComponent,
     PlaygroundLinkComponent,
-    Barnard59CliCommandComponent
+    CubeValidationBarnard59CliCommandComponent
   ]
 })
 export class CubeValidationComponent {

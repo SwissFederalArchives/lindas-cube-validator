@@ -7,10 +7,9 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 
 import { ObButtonModule, ObIconModule } from '@oblique/oblique';
 import { MatButtonModule } from '@angular/material/button';
-import { end } from '@popperjs/core';
 
 @Component({
-  selector: 'cube-barnard59-cli-command',
+  selector: 'cube-validation-barnard59-cli-command',
   standalone: true,
   imports: [
     MatTooltipModule,
@@ -20,10 +19,11 @@ import { end } from '@popperjs/core';
     ObIconModule,
 
   ],
-  templateUrl: './barnard59-cli-command.component.html',
-  styleUrl: './barnard59-cli-command.component.scss'
+  templateUrl: './cub-validation-barnard59-cli-command.component.html',
+  styleUrl: './cub-validation-barnard59-cli-command.component.scss'
 })
-export class Barnard59CliCommandComponent {
+export class CubeValidationBarnard59CliCommandComponent {
+
   endpoint = input.required<string>();
   cubeIri = input.required<string>();
   validationProfileUrl = input<string | null>(null);

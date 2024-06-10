@@ -24,8 +24,9 @@ import { EndpointService } from '../../../core/service/endpoint/endpoint.service
 import { Dataset } from '@zazuko/env/lib/DatasetExt';
 import { CubeDefinition } from '../../../core/model/cube-definition/cube-definition';
 import { rdfEnvironment } from '../../../core/rdf/rdf-environment';
-import { Barnard59CliCommandComponent } from "../../../core/component/barnard59-cli-command/barnard59-cli-command.component";
 import { JsonPipe } from '@angular/common';
+import { CubeValidationBarnard59CliCommandComponent } from '../../../core/component/cub-validation-barnard59-cli-command/cub-validation-barnard59-cli-command.component';
+import { ObservationValidationBarnard59CliCommandComponent } from "../../../core/component/observation-validation-barnard59-cli-command/observation-validation-barnard59-cli-command.component";
 
 @Component({
   standalone: true,
@@ -48,8 +49,9 @@ import { JsonPipe } from '@angular/common';
     CubeDescriptionComponent,
     CubeValidationComponent,
     ObservationValidationComponent,
-    Barnard59CliCommandComponent,
-    JsonPipe
+    CubeValidationBarnard59CliCommandComponent,
+    JsonPipe,
+    ObservationValidationBarnard59CliCommandComponent
   ]
 })
 /**

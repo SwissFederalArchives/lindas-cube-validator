@@ -106,7 +106,7 @@ export class EndpointService {
   /**
    * ValidationReport
    */
-  getObservationValidationJunkedReport(endpointUrl: string, cubeIri: string, chunkSize: number): Observable<ValidationReport> {
+  getObservationValidationJunkedReport(endpointUrl: string, cubeIri: string, chunkSize: number): Observable<CubeValidationResult> {
     this.lastUsedEndpoint = endpointUrl;
     const shapeGraphQuery = this.sparqlService.construct(endpointUrl, getShapeGraphForCube(cubeIri));
 
@@ -132,7 +132,13 @@ export class EndpointService {
       map(result => {
         const report = validator.validate(result.dataset);
         countValidationErrors += report.results.length;
-        return report;
+        return {
+          shapeGraph: shapeGraph,
+          shapeGraphSerialized: shapeGraph.toCanonical(),
+          dataGraph: result.dataset,
+          dataGraphSerialized: result.serialized,
+          report: report
+        }
       }),
     )
 
