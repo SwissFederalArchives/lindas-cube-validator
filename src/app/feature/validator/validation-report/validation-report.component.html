@@ -6,9 +6,9 @@
         </caption>
         <thead>
                 <tr>
+                        <th>Message</th>
                         <th>Focus Node</th>
                         <th>Path</th>
-                        <th>Message</th>
                         <th>Value</th>
                         <th>Severity</th>
                 </tr>
@@ -18,18 +18,19 @@
 
                 <tr>
                         <td>
+
+                                @for(m of result.message; track m) {
+                                <div>Message: {{m.value}}</div>
+                                }
+                        </td>
+                        <td>
                                 <a target="_blank"
                                         [href]="result.focusNode?.value ?? ''">&lt;{{result.focusNode?.value}}&gt;</a>
                         </td>
                         <td>
                                 {{result.path?.value}}
                         </td>
-                        <td>
 
-                                @for(m of result.message; track m) {
-                                <div>Message: {{m.value}}</div>
-                                }
-                        </td>
                         <td>
                                 {{result.value?.value ?? ''}}
                         </td>
