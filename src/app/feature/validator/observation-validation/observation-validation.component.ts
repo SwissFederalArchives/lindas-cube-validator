@@ -114,6 +114,7 @@ export class ObservationValidationComponent {
     MatDialogActions,
     MatDialogClose,
     MatButtonModule,
-    TranslateModule],
+    TranslateModule
+  ],
 })
 export class DialogElementsExampleDialog { }
