@@ -13,7 +13,8 @@
         "title_observation_validation_process": "Observation-Validierung",
         "describe_observation_validation_process": "Es werden 10 Observations validiert, danach werden weitere 10 Observations geladen und validiert. Dieser Vorgang wird maximal 10 Mal wiederholt. Sobald mehr als 20 Fehler gefunden wurden, wird der Prozess abgebrochen.",
         "observation_valid": "Entspricht den Cube-Shape-Constraints",
-        "observation_invalid": "Entspricht nicht den Cube-Shape-Constraints"
+        "observation_invalid": "Entspricht nicht den Cube-Shape-Constraints",
+        "url_error": "Please provide a valid HTTP URL"
     },
     "footer": {
         "title": "Bundesamt für Umwelt BAFU"

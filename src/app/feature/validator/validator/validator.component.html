@@ -2,16 +2,21 @@
     <mat-icon svgIcon="arrow-left" /> {{'navigation.back' | translate}}
 </button>
 <div>
+
     <cube-cube-description [cube]="cubeDefinition()" (profileSelected)="updateValidationProfile($event)"
-        [selectedProfileIri]="currentProfile()?.value" [@fadeInOut] />
+        [selectedProfile]="currentProfile()" [@fadeInOut] />
     <ob-spinner [channel]="'cube'" />
 </div>
+
 <mat-tab-group [selectedIndex]="currentTabIndex()" (selectedIndexChange)="changeTab($event)" preserveContent>
     <mat-tab label="Cube">
         @if(!isCubeValidationRunning() && cubeValidationReport()) {
         <cube-validation [report]="cubeValidationReport()!" />
         <cube-barnard59-cli-command [cubeIri]="cubeIri()" [endpoint]="endpoint()"
             [validationProfileUrl]="currentProfile()?.value!" />
+        } @else if (errorSignal() && !isCubeValidationRunning()) {
+        <span>{{errorSignal()}}</span>
+
         } @else {
         <h1>Running</h1>
         }

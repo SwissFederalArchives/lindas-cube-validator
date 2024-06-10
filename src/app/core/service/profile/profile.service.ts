@@ -13,28 +13,7 @@ const RDF_MIME_TYPE = 'text/turtle';
   providedIn: 'root'
 })
 export class ProfileService {
-  private readonly http = inject(HttpClient);
-
-  constructor() { }
-
-  /*
-  getDefaultProfile(): Observable<ValidationProfileData> {
-    return this.get('https://cube.link/ref/main/shape/standalone-cube-constraint');
-  }
-
-  getOpenSwissProfile(): Observable<ValidationProfileData> {
-    return this.get('https://cube.link/ref/main/shape/profile-opendataswiss.ttl');
-  }
-  */
-
-  /**
-   *
-   * @deprecated
-   */
-  getVisualizeProfile(): Observable<ValidationProfileData> {
-    return this._get('https://cube.link/ref/main/shape/profile-visualize');
-  }
-
+  readonly #http = inject(HttpClient);
 
 
   getProfile(profile: ValidationProfile): Observable<ValidationProfileData> {
@@ -45,13 +24,19 @@ export class ProfileService {
   private _get(profileUrl: string): Observable<ValidationProfileData> {
 
     const fetchProfile = async () => {
+
       const response = await rdfEnvironment.fetch(profileUrl);
+      if (!response.ok) {
+        console.error(response);
+        return { dataset: rdfEnvironment.dataset(), profileSerialized: '', error: `Failed to fetch profile: ${response.status}` }
+      }
       const parsed = await response.quadStream() as any;
       const transformed = parsed.pipe(transform(rdfEnvironment))
       const dataset = await rdfEnvironment.dataset().import(transformed)
       const profileSerialized = dataset.toCanonical()
       return { dataset, profileSerialized }
     }
+
 
     return from(fetchProfile())
 
@@ -61,4 +46,5 @@ export class ProfileService {
 export interface ValidationProfileData {
   dataset: Dataset;
   profileSerialized: string;
+  error?: string;
 }

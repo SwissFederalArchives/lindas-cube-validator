@@ -25,6 +25,7 @@ import { Dataset } from '@zazuko/env/lib/DatasetExt';
 import { CubeDefinition } from '../../../core/model/cube-definition/cube-definition';
 import { rdfEnvironment } from '../../../core/rdf/rdf-environment';
 import { Barnard59CliCommandComponent } from "../../../core/component/barnard59-cli-command/barnard59-cli-command.component";
+import { JsonPipe } from '@angular/common';
 
 @Component({
   standalone: true,
@@ -47,7 +48,8 @@ import { Barnard59CliCommandComponent } from "../../../core/component/barnard59-
     CubeDescriptionComponent,
     CubeValidationComponent,
     ObservationValidationComponent,
-    Barnard59CliCommandComponent
+    Barnard59CliCommandComponent,
+    JsonPipe
   ]
 })
 /**
@@ -58,15 +60,17 @@ export class ValidatorComponent implements OnInit {
   readonly endpoint = input.required<string>();
 
   readonly tabName = signal<string>('cube');
-  readonly profileIri = signal<string>('');
+  readonly profileIri = signal<string | undefined>(undefined);
+  readonly manualProfileIri = signal<string | undefined>(undefined);
   readonly isCubeValidationRunning = signal<boolean>(false);
+
   readonly #router = inject(Router);
   readonly #route = inject(ActivatedRoute);
   readonly #destroyRef = inject(DestroyRef);
   readonly #endpointService = inject(EndpointService);
   readonly spinnerService = inject(ObSpinnerService);
 
-
+  errorSignal = signal<string | null>(null);
   cubeDefinition = toSignal(
     toObservable(
       computed<CubeInfo | null>(() => {
@@ -98,6 +102,7 @@ export class ValidatorComponent implements OnInit {
         const endpoint = this.endpoint();
         const cubeIri = this.cubeIri();
         const profile = this.currentProfile();
+
         if (profile === null || endpoint === undefined || cubeIri === undefined) {
           return null;
         }
@@ -114,10 +119,13 @@ export class ValidatorComponent implements OnInit {
       switchMap(cubeInfo => {
         this.spinnerService.activate('cube');
         this.isCubeValidationRunning.set(true);
+        this.errorSignal.set(null);
         return this.#endpointService.getValidationReportForProfile(cubeInfo!.endpoint, cubeInfo!.cubeIri, cubeInfo!.profile!)
       }),
       catchError(err => {
         console.error(err);
+        this.spinnerService.forceDeactivate('cube');
+        this.isCubeValidationRunning.set(false);
         return of(null);
       }),
       map(result => {
@@ -126,7 +134,11 @@ export class ValidatorComponent implements OnInit {
         if (result === null) {
           return null;
         }
-        const reportDataset = result.report.dataset;
+        if (result.error) {
+          this.errorSignal.set(result.error);
+          return null;
+        }
+        const reportDataset = result.report!.dataset;
         // merge report graph with dataGraph
         (reportDataset as Dataset).addAll(result.dataGraph);
 
@@ -139,10 +151,24 @@ export class ValidatorComponent implements OnInit {
 
   currentProfile = computed<ValidationProfile | null>(() => {
     const profileIri = this.profileIri();
+    const manualProfileIri = this.manualProfileIri();
     const availableProfiles = this.availableProfiles();
+
+    if (manualProfileIri !== undefined) {
+      const manualProfile: ValidationProfile = {
+        label: 'manual',
+        value: manualProfileIri,
+        key: 'manual',
+        workNodeIri: ''
+      };
+      return manualProfile;
+    }
+
     if (availableProfiles.length === 0) {
       return null;
     }
+
+
 
     const currentProfile = availableProfiles.find(p => p.value === profileIri);
     if (currentProfile === undefined) {
@@ -168,26 +194,45 @@ export class ValidatorComponent implements OnInit {
       next: params => {
         const tabName = params['tab'];
         const profileIri = params['profile'];
+        const manualProfileIri = params['manualProfile'];
         if (tabName !== undefined) {
           this.tabName.set(tabName);
         }
 
-        if (profileIri !== undefined) {
-          this.profileIri.set(profileIri);
+        if (profileIri && manualProfileIri) {
+          this.profileIri.set(undefined);
+          this.manualProfileIri.set(manualProfileIri);
+          return;
+        }
 
+        if (profileIri !== undefined) {
+          this.manualProfileIri.set(undefined);
+          this.profileIri.set(profileIri);
+        }
+        if (manualProfileIri !== undefined) {
+          this.profileIri.set(undefined);
+          this.manualProfileIri.set(manualProfileIri);
         }
       }
     });
   }
 
   updateValidationProfile(profile: ValidationProfile): void {
+    const queryParams = Object.assign({}, this.#route.snapshot.queryParams);
+    if (profile.key === 'manual') {
+      // remove param profile 
+      delete queryParams['profile'];
+      queryParams['manualProfile'] = profile.value;
+    } else {
+      // remove param manualProfile
+      delete queryParams['manualProfile'];
+      queryParams['profile'] = profile.value;
+    }
     const navigationExtras: NavigationExtras = {
       relativeTo: this.#route,
-      queryParams: { profile: profile.value },
-      queryParamsHandling: 'merge' // keep the old queryParams if they are not updated
+      queryParams: queryParams
     };
     this.#router.navigate(['./'], navigationExtras);
-
   }
 
   /**

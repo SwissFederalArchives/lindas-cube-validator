@@ -1,7 +1,7 @@
 import { Injectable, inject } from '@angular/core';
 import { GraphResult, SparqlService } from '../sparql/sparql.service';
 import { ProfileService } from '../profile/profile.service';
-import { Observable, forkJoin, map, switchMap, expand, EMPTY, tap, takeUntil } from 'rxjs';
+import { Observable, forkJoin, map, switchMap, expand, EMPTY, tap, takeUntil, catchError } from 'rxjs';
 
 // queries
 import { CONSTRUCT_CUBE_ITEMS } from './query/get-cube-items';
@@ -22,7 +22,6 @@ export class EndpointService {
   private readonly sparqlService = inject(SparqlService);
   private readonly profileService = inject(ProfileService);
 
-  private readonly profile = this.profileService.getVisualizeProfile();
 
   readonly maxValidationErrors = 20;
   readonly maxPages = 10;
@@ -62,6 +61,16 @@ export class EndpointService {
 
     return forkJoin([shapeGraphQuery, dataGraphQuery, singleObservationQuery]).pipe(
       map(([shapeGraph, dataGraph, singleObservationGraph]) => {
+        if (shapeGraph.error) {
+          return {
+            shapeGraph: rdfEnvironment.dataset(),
+            shapeGraphSerialized: '',
+            dataGraph: rdfEnvironment.dataset(),
+            dataGraphSerialized: '',
+            report: null,
+            error: shapeGraph.error
+          }
+        }
         // add a single observation to the dataGraph in order to avoid empty observation sets
         // this is a workaround to avoid a warning in the validator that the observation set is empty
         dataGraph.dataset.addAll(singleObservationGraph.dataset);
@@ -162,7 +171,8 @@ export interface CubeValidationResult {
   shapeGraphSerialized: string;
   dataGraph: Dataset;
   dataGraphSerialized: string;
-  report: ValidationReport;
+  report: ValidationReport | null;
+  error?: string
 }
 
 
