@@ -20,7 +20,7 @@
     "@angular/platform-browser-dynamic": "^17.3.9",
     "@angular/router": "^17.3.9",
     "@ngx-translate/core": "^15.0.0",
-    "@oblique/oblique": "^11.1.3",
+    "@oblique/oblique": "^11.2.1",
     "@popperjs/core": "^2.0.0",
     "@rdfjs-elements/formats-pretty": "^0.6.7",
     "@rdfjs/fetch-lite": "^3.2.2",
