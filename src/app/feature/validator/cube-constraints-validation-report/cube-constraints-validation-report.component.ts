@@ -11,13 +11,23 @@ import { MatIconModule } from '@angular/material/icon';
 import { ObButtonModule, ObIconModule } from '@oblique/oblique';
 import { MatButtonModule } from '@angular/material/button';
 import { animate, state, style, transition, trigger } from '@angular/animations';
+import { JsonPipe } from '@angular/common';
 
 @Component({
   selector: 'cube-constraints-validation-report',
   standalone: true,
   templateUrl: './cube-constraints-validation-report.component.html',
   styleUrl: './cube-constraints-validation-report.component.scss',
-  imports: [SeverityComponent, MatTableModule, MatIconModule, ObIconModule, MatButtonModule, ObButtonModule, MatExpansionModule],
+  imports: [
+    SeverityComponent,
+    MatTableModule,
+    MatIconModule,
+    ObIconModule,
+    MatButtonModule,
+    ObButtonModule,
+    MatExpansionModule,
+    JsonPipe
+  ],
   animations: [
     trigger('detailExpand', [
       state('collapsed,void', style({ height: '0px', minHeight: '0' })),
@@ -45,11 +55,12 @@ export class CubeConstraintsValidationReportComponent {
     }
 
     const results = rdfEnvironment.clownface({ dataset }).node(sh['ValidationResult']).in(rdf['type']).map(n => new ValidationResult(n)).filter(result => result.isAboutCube());
-
-    const resultWithDetails = results.flatMap(result => [result, ...result.detail]);
+    const resultCubeDetails = rdfEnvironment.clownface({ dataset }).node(sh['ValidationResult']).in(rdf['type']).out(sh['detail']).map(n => new ValidationResult(n)).filter(result => result.isAboutCube());
+    const resultWithDetails = [...results, ...resultCubeDetails];
     return resultWithDetails;
   }
   );
+
 
   dimensionValidationResult = computed<ValidationResult[]>(() => {
     const dataset = this.report().dataset;
@@ -63,5 +74,4 @@ export class CubeConstraintsValidationReportComponent {
     return resultWithDetails;
   }
   );
-
 }
