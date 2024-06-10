@@ -4,11 +4,12 @@ import { CubeDefinition } from '../../model/cube-definition/cube-definition';
 import { MatIconModule } from '@angular/material/icon';
 
 import { ObExternalLinkModule, ObLanguageService } from '@oblique/oblique';
-import { map, take } from 'rxjs';
+import { map } from 'rxjs';
 import { takeUntilDestroyed, toSignal } from '@angular/core/rxjs-interop';
 import { FadeInOut } from '../../animation/fade-in-out';
 import { ProfileSelectorComponent } from "../profile-selector/profile-selector.component";
 import { ValidationProfile } from '../../constant/validation-profile';
+import { JsonPipe } from '@angular/common';
 
 
 @Component({
@@ -18,24 +19,21 @@ import { ValidationProfile } from '../../constant/validation-profile';
   styleUrl: './cube-description.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
   animations: [FadeInOut(300, 200)],
-  imports: [MatIconModule, ObExternalLinkModule, ProfileSelectorComponent]
+  imports: [
+    MatIconModule,
+    ObExternalLinkModule,
+    ProfileSelectorComponent,
+    JsonPipe
+  ]
 })
 export class CubeDescriptionComponent {
   cube = input.required<CubeDefinition | undefined>();
-  selectedProfileIri = input.required<string | undefined | null>();
+  selectedProfile = input.required<ValidationProfile | undefined | null>();
   profileSelected = output<ValidationProfile>();
 
   readonly #languageService = inject(ObLanguageService);
   readonly #destroyRef = inject(DestroyRef);
   readonly #language: Signal<string | undefined>;
-
-  constructor() {
-    this.#language = toSignal<string>(this.#languageService.locale$.pipe(
-      takeUntilDestroyed(this.#destroyRef),
-      map(locale => locale.split('-')[0] ?? 'de')
-    )
-    );
-  }
 
   cubeName = computed<string>(() => {
     const lang = this.#language() ?? 'de';
@@ -63,6 +61,15 @@ export class CubeDescriptionComponent {
     }
 
   });
+
+  constructor() {
+    this.#language = toSignal<string>(this.#languageService.locale$.pipe(
+      takeUntilDestroyed(this.#destroyRef),
+      map(locale => locale.split('-')[0] ?? 'de')
+    )
+    );
+  }
+
 
   emitProfileSelected(profile: ValidationProfile) {
     this.profileSelected.emit(profile);

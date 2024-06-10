@@ -13,7 +13,8 @@
         "title_observation_validation_process": "Observation Validation Process",
         "describe_observation_validation_process": "10 observations are validated, then another 10 observations are loaded and validated. This process is repeated up to 10 times. Once more than 20 errors have been found, the process is terminated.",
         "observation_valid": "Conforms to the Cube Shape constraints",
-        "observation_invalid": "Does not conform to the Cube Shape constraints"
+        "observation_invalid": "Does not conform to the Cube Shape constraints",
+        "url_error": "Please provide a valid HTTP URL"
     },
     "footer": {
         "title": "Federal Office for the Environment FOEN"
