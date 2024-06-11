@@ -26,7 +26,6 @@ import { JsonPipe } from '@angular/common';
     MatButtonModule,
     ObButtonModule,
     MatExpansionModule,
-    JsonPipe
   ],
   animations: [
     trigger('detailExpand', [
@@ -40,9 +39,9 @@ export class CubeConstraintsValidationReportComponent {
   report = input.required<ValidationReport>();
 
 
-  cubeColumnsToDisplay = ['Path', 'Message', 'Value', 'Severity'];
+  cubeColumnsToDisplay = ['Message', 'Path', 'Value', 'Severity'];
 
-  dimensionColumnsToDisplay = ['Dimension', 'Message', 'Severity'];
+  dimensionColumnsToDisplay = ['Message', 'Dimension', 'Severity'];
 
   dimensionColumnsToDisplayWithExpand = [...this.dimensionColumnsToDisplay, 'expand'];
   expandedElement: ValidationResult | null = null;
