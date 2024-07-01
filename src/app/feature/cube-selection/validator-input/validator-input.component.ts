@@ -91,12 +91,21 @@ export class ValidatorInputComponent {
         iri: cube.iri,
         description: cube.descriptionEN ?? cube.description ?? cube.descriptionDE ?? cube.descriptionFR ?? cube.descriptionFR ?? 'No description',
         datePublished: cube.datePublished ? datePipe.transform(cube.datePublished).split(' ')[0] : 'No date',
-        searchField: ''
+        searchField: [
+          cube.iri, cube.name ?? '', 
+          cube.nameDE ?? '', 
+          cube.nameEN ?? '', 
+          cube.nameFR ?? '', 
+          cube.nameIT ?? '', 
+          cube.iri, 
+          cube.description ?? '', 
+          cube.descriptionDE ?? '',
+          cube.descriptionEN  ?? '',
+          cube.descriptionFR ?? '',
+          cube.descriptionIT ?? '',
+          cube.datePublished].join(' ').toLocaleLowerCase()
       }
     });
-
-    // update the search field
-    items.forEach(cube => cube.searchField = [cube.iri, cube.name, cube.description, cube.datePublished].join(' '))
 
     // sort by name 
     items.sort((a, b) => a.name.localeCompare(b.name));
