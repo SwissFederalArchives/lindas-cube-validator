@@ -23,7 +23,7 @@ const PROFILES = [
     {
         key: 'default',
         value: 'https://cube.link/ref/main/shape/standalone-cube-constraint',
-        label: 'Default',
+        label: 'Basic',
         workNodeIri: ''
     },
 ];
