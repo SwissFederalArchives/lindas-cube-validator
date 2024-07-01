@@ -53,7 +53,8 @@ export class ItemListComponent {
     if (!filterTerm || filterTerm.length < 3) {
       return items;
     }
-    return this.items().filter(item => item.searchField.includes(filterTerm));
+    const lowercaseFilterTerm = filterTerm.toLocaleLowerCase().trim();
+    return this.items().filter(item => item.searchField.includes(lowercaseFilterTerm));
   });
 
   searchFormControl = new FormControl<string>('');
