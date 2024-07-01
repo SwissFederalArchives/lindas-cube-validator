@@ -64,7 +64,7 @@ export class ValidatorInputComponent {
           iri: cube.iri,
           description: cube.descriptionDE ?? cube.description ?? cube.descriptionEN ?? cube.descriptionFR ?? cube.descriptionIT ?? 'Keine Beschreibung',
           datePublished: cube.datePublished ? datePipe.transform(cube.datePublished).split(' ')[0] : 'Kein Datum',
-          searchField: ''
+          searchField: this.#createSearchField(cube)
         }
       }
       if (lang === 'fr') {
@@ -73,7 +73,7 @@ export class ValidatorInputComponent {
           iri: cube.iri,
           description: cube.descriptionFR ?? cube.description ?? cube.descriptionEN ?? cube.descriptionDE ?? cube.descriptionIT ?? 'Pas de description',
           datePublished: cube.datePublished ? datePipe.transform(cube.datePublished).split(' ')[0] : 'Pas de date',
-          searchField: ''
+          searchField: this.#createSearchField(cube)
         }
       }
       if (lang === 'it') {
@@ -82,7 +82,7 @@ export class ValidatorInputComponent {
           iri: cube.iri,
           description: cube.descriptionIT ?? cube.description ?? cube.descriptionEN ?? cube.descriptionDE ?? cube.descriptionFR ?? 'Nessuna descrizione',
           datePublished: cube.datePublished ? datePipe.transform(cube.datePublished).split(' ')[0] : 'Nessuna data',
-          searchField: ''
+          searchField: this.#createSearchField(cube)
         }
       }
       // default to english
@@ -91,19 +91,7 @@ export class ValidatorInputComponent {
         iri: cube.iri,
         description: cube.descriptionEN ?? cube.description ?? cube.descriptionDE ?? cube.descriptionFR ?? cube.descriptionFR ?? 'No description',
         datePublished: cube.datePublished ? datePipe.transform(cube.datePublished).split(' ')[0] : 'No date',
-        searchField: [
-          cube.iri, cube.name ?? '', 
-          cube.nameDE ?? '', 
-          cube.nameEN ?? '', 
-          cube.nameFR ?? '', 
-          cube.nameIT ?? '', 
-          cube.iri, 
-          cube.description ?? '', 
-          cube.descriptionDE ?? '',
-          cube.descriptionEN  ?? '',
-          cube.descriptionFR ?? '',
-          cube.descriptionIT ?? '',
-          cube.datePublished].join(' ').toLocaleLowerCase()
+        searchField: this.#createSearchField(cube)
       }
     });
 
@@ -167,6 +155,22 @@ export class ValidatorInputComponent {
 
   emitSelected(cubeIri: string): void {
     this.selected.emit({ cubeIri, endpoint: this.endpointFormControl.value ?? '' });
+  }
+
+  #createSearchField(cube: MultiLanguageCubeItem): string {
+    return [
+      cube.iri, cube.name ?? '', 
+      cube.nameDE ?? '', 
+      cube.nameEN ?? '', 
+      cube.nameFR ?? '', 
+      cube.nameIT ?? '', 
+      cube.iri, 
+      cube.description ?? '', 
+      cube.descriptionDE ?? '',
+      cube.descriptionEN  ?? '',
+      cube.descriptionFR ?? '',
+      cube.descriptionIT ?? '',
+      cube.datePublished].join(' ').toLocaleLowerCase()
   }
 
 
