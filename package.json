@@ -20,7 +20,7 @@
     "@angular/platform-browser-dynamic": "^17.3.9",
     "@angular/router": "^17.3.9",
     "@ngx-translate/core": "^15.0.0",
-    "@oblique/oblique": "^11.2.1",
+    "@oblique/oblique": "^14.0.0",
     "@popperjs/core": "^2.0.0",
     "@rdfjs-elements/formats-pretty": "^0.6.7",
     "@rdfjs/fetch-lite": "^3.2.2",
@@ -39,8 +39,8 @@
     "zone.js": "~0.14.3"
   },
   "devDependencies": {
-    "@angular-devkit/build-angular": "^17.3.7",
-    "@angular/cli": "^17.3.7",
+    "@angular-devkit/build-angular": "^20.3.4",
+    "@angular/cli": "^20.3.4",
     "@angular/compiler-cli": "^17.3.9",
     "@types/clownface": "^2.0.7",
     "@types/get-stream": "^3.0.2",
