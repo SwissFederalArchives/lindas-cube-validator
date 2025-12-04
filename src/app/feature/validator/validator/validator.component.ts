@@ -29,30 +29,29 @@ import { CubeValidationBarnard59CliCommandComponent } from '../../../core/compon
 import { ObservationValidationBarnard59CliCommandComponent } from "../../../core/component/observation-validation-barnard59-cli-command/observation-validation-barnard59-cli-command.component";
 
 @Component({
-  standalone: true,
-  templateUrl: './validator.component.html',
-  styleUrl: './validator.component.scss',
-  animations: [FadeInOut(300, 200)],
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [
-    RouterLink,
-    RouterLinkActive,
-    RouterOutlet,
-    MatTabsModule,
-    MatButtonModule,
-    MatIconModule,
-    ObButtonModule,
-    ObSpinnerModule,
-    ObSpinnerModule,
-    TranslateModule,
-    ValidationReportComponent,
-    CubeDescriptionComponent,
-    CubeValidationComponent,
-    ObservationValidationComponent,
-    CubeValidationBarnard59CliCommandComponent,
-    JsonPipe,
-    ObservationValidationBarnard59CliCommandComponent
-  ]
+    templateUrl: './validator.component.html',
+    styleUrl: './validator.component.scss',
+    animations: [FadeInOut(300, 200)],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    imports: [
+        RouterLink,
+        RouterLinkActive,
+        RouterOutlet,
+        MatTabsModule,
+        MatButtonModule,
+        MatIconModule,
+        ObButtonModule,
+        ObSpinnerModule,
+        ObSpinnerModule,
+        TranslateModule,
+        ValidationReportComponent,
+        CubeDescriptionComponent,
+        CubeValidationComponent,
+        ObservationValidationComponent,
+        CubeValidationBarnard59CliCommandComponent,
+        JsonPipe,
+        ObservationValidationBarnard59CliCommandComponent
+    ]
 })
 /**
  * Represents a component used for validating a cube.

@@ -5,12 +5,11 @@ import { TranslateModule } from '@ngx-translate/core';
 import { FadeInOut } from '../../../core/animation/fade-in-out';
 
 @Component({
-  selector: 'cube-validator',
-  standalone: true,
-  templateUrl: './cube-selector.component.html',
-  styleUrl: './cube-selector.component.scss',
-  imports: [ValidatorInputComponent, TranslateModule],
-  animations: [FadeInOut(300, 200)],
+    selector: 'cube-validator',
+    templateUrl: './cube-selector.component.html',
+    styleUrl: './cube-selector.component.scss',
+    imports: [ValidatorInputComponent, TranslateModule],
+    animations: [FadeInOut(300, 200)]
 })
 export class CubeSelectorComponent {
 

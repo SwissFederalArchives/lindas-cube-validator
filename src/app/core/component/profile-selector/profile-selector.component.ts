@@ -4,7 +4,7 @@ import { AbstractControl, FormControl, ValidationErrors, ReactiveFormsModule, Fo
 
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectChange, MatSelectModule } from '@angular/material/select';
-import { ObButtonModule, ObFormFieldModule, ObIconModule } from '@oblique/oblique';
+import { ObButtonModule, ObIconModule } from '@oblique/oblique';
 import { ValidationProfile } from '../../constant/validation-profile';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
@@ -13,22 +13,20 @@ import { TranslateModule } from '@ngx-translate/core';
 
 
 @Component({
-  selector: 'cube-profile-selector',
-  standalone: true,
-  imports: [
-    ReactiveFormsModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatSelectModule,
-    MatIconModule,
-    MatButtonModule,
-    ObIconModule,
-    ObButtonModule,
-    ObFormFieldModule,
-    TranslateModule,
-  ],
-  templateUrl: './profile-selector.component.html',
-  styleUrl: './profile-selector.component.scss'
+    selector: 'cube-profile-selector',
+    imports: [
+        ReactiveFormsModule,
+        MatFormFieldModule,
+        MatInputModule,
+        MatSelectModule,
+        MatIconModule,
+        MatButtonModule,
+        ObIconModule,
+        ObButtonModule,
+        TranslateModule,
+    ],
+    templateUrl: './profile-selector.component.html',
+    styleUrl: './profile-selector.component.scss'
 })
 export class ProfileSelectorComponent {
   profiles = input.required<ValidationProfile[]>();
@@ -43,7 +41,7 @@ export class ProfileSelectorComponent {
   showList = signal<boolean>(true);
 
 
-  // the url 
+  // the url
   manualForm = new FormGroup({
     manualProfileUrl: new FormControl('', urlValidator)
   });

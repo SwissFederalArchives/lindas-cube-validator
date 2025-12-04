@@ -17,24 +17,23 @@ import { PlaygroundLinkComponent } from '../../../core/component/playground-link
 import { CubeValidationBarnard59CliCommandComponent } from '../../../core/component/cub-validation-barnard59-cli-command/cub-validation-barnard59-cli-command.component';
 
 @Component({
-  selector: 'cube-validation',
-  standalone: true,
-  templateUrl: './cube-validation.component.html',
-  styleUrl: './cube-validation.component.scss',
-  animations: [FadeInOut(300, 200)],
-  imports: [
-    ObSpinnerModule,
-    ObAlertModule,
-    ObSpinnerModule,
-    TranslateModule,
-    ValidationReportComponent,
-    ProfileSelectorComponent,
-    CubeDescriptionComponent,
-    ConformsIndicatorComponent,
-    CubeConstraintsValidationReportComponent,
-    PlaygroundLinkComponent,
-    CubeValidationBarnard59CliCommandComponent
-  ]
+    selector: 'cube-validation',
+    templateUrl: './cube-validation.component.html',
+    styleUrl: './cube-validation.component.scss',
+    animations: [FadeInOut(300, 200)],
+    imports: [
+        ObSpinnerModule,
+        ObAlertModule,
+        ObSpinnerModule,
+        TranslateModule,
+        ValidationReportComponent,
+        ProfileSelectorComponent,
+        CubeDescriptionComponent,
+        ConformsIndicatorComponent,
+        CubeConstraintsValidationReportComponent,
+        PlaygroundLinkComponent,
+        CubeValidationBarnard59CliCommandComponent
+    ]
 })
 export class CubeValidationComponent {
   report = input.required<CubeValidationResult | undefined>();

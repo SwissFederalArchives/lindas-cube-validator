@@ -9,18 +9,16 @@ import { ObButtonModule, ObIconModule } from '@oblique/oblique';
 import { MatButtonModule } from '@angular/material/button';
 
 @Component({
-  selector: 'cube-validation-barnard59-cli-command',
-  standalone: true,
-  imports: [
-    MatTooltipModule,
-    MatIconModule,
-    MatButtonModule,
-    ObButtonModule,
-    ObIconModule,
-
-  ],
-  templateUrl: './cub-validation-barnard59-cli-command.component.html',
-  styleUrl: './cub-validation-barnard59-cli-command.component.scss'
+    selector: 'cube-validation-barnard59-cli-command',
+    imports: [
+        MatTooltipModule,
+        MatIconModule,
+        MatButtonModule,
+        ObButtonModule,
+        ObIconModule,
+    ],
+    templateUrl: './cub-validation-barnard59-cli-command.component.html',
+    styleUrl: './cub-validation-barnard59-cli-command.component.scss'
 })
 export class CubeValidationBarnard59CliCommandComponent {
 

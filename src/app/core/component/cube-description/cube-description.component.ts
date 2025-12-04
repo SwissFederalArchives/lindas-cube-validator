@@ -3,8 +3,9 @@ import { CubeDefinition } from '../../model/cube-definition/cube-definition';
 
 import { MatIconModule } from '@angular/material/icon';
 
-import { ObExternalLinkModule, ObLanguageService } from '@oblique/oblique';
-import { map } from 'rxjs';
+import { ObExternalLinkModule } from '@oblique/oblique';
+import { TranslateService } from '@ngx-translate/core';
+import { map, startWith } from 'rxjs';
 import { takeUntilDestroyed, toSignal } from '@angular/core/rxjs-interop';
 import { FadeInOut } from '../../animation/fade-in-out';
 import { ProfileSelectorComponent } from "../profile-selector/profile-selector.component";
@@ -13,27 +14,26 @@ import { JsonPipe } from '@angular/common';
 
 
 @Component({
-  selector: 'cube-cube-description',
-  standalone: true,
-  templateUrl: './cube-description.component.html',
-  styleUrl: './cube-description.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  animations: [FadeInOut(300, 200)],
-  imports: [
-    MatIconModule,
-    ObExternalLinkModule,
-    ProfileSelectorComponent,
-    JsonPipe
-  ]
+    selector: 'cube-cube-description',
+    templateUrl: './cube-description.component.html',
+    styleUrl: './cube-description.component.scss',
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    animations: [FadeInOut(300, 200)],
+    imports: [
+        MatIconModule,
+        ObExternalLinkModule,
+        ProfileSelectorComponent,
+        JsonPipe
+    ]
 })
 export class CubeDescriptionComponent {
   cube = input.required<CubeDefinition | undefined>();
   selectedProfile = input.required<ValidationProfile | undefined | null>();
   profileSelected = output<ValidationProfile>();
 
-  readonly #languageService = inject(ObLanguageService);
+  readonly #translateService = inject(TranslateService);
   readonly #destroyRef = inject(DestroyRef);
-  readonly #language: Signal<string | undefined>;
+  readonly #language: Signal<string>;
 
   cubeName = computed<string>(() => {
     const lang = this.#language() ?? 'de';
@@ -63,10 +63,14 @@ export class CubeDescriptionComponent {
   });
 
   constructor() {
-    this.#language = toSignal<string>(this.#languageService.locale$.pipe(
-      takeUntilDestroyed(this.#destroyRef),
-      map(locale => locale.split('-')[0] ?? 'de')
-    )
+    const currentLang = this.#translateService.currentLang?.split('-')[0] ?? 'de';
+    this.#language = toSignal(
+      this.#translateService.onLangChange.pipe(
+        takeUntilDestroyed(this.#destroyRef),
+        map(event => event.lang.split('-')[0] ?? 'de'),
+        startWith(currentLang)
+      ),
+      { requireSync: true }
     );
   }
 

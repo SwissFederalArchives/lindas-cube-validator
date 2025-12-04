@@ -14,26 +14,25 @@ import { animate, state, style, transition, trigger } from '@angular/animations'
 import { JsonPipe } from '@angular/common';
 
 @Component({
-  selector: 'cube-constraints-validation-report',
-  standalone: true,
-  templateUrl: './cube-constraints-validation-report.component.html',
-  styleUrl: './cube-constraints-validation-report.component.scss',
-  imports: [
-    SeverityComponent,
-    MatTableModule,
-    MatIconModule,
-    ObIconModule,
-    MatButtonModule,
-    ObButtonModule,
-    MatExpansionModule,
-  ],
-  animations: [
-    trigger('detailExpand', [
-      state('collapsed,void', style({ height: '0px', minHeight: '0' })),
-      state('expanded', style({ height: '*' })),
-      transition('expanded <=> collapsed', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')),
-    ]),
-  ],
+    selector: 'cube-constraints-validation-report',
+    templateUrl: './cube-constraints-validation-report.component.html',
+    styleUrl: './cube-constraints-validation-report.component.scss',
+    imports: [
+        SeverityComponent,
+        MatTableModule,
+        MatIconModule,
+        ObIconModule,
+        MatButtonModule,
+        ObButtonModule,
+        MatExpansionModule,
+    ],
+    animations: [
+        trigger('detailExpand', [
+            state('collapsed,void', style({ height: '0px', minHeight: '0' })),
+            state('expanded', style({ height: '*' })),
+            transition('expanded <=> collapsed', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')),
+        ]),
+    ]
 })
 export class CubeConstraintsValidationReportComponent {
   report = input.required<ValidationReport>();

@@ -5,7 +5,7 @@ import { MatFormField } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 
-import { ObFormFieldModule, ObIconModule, ObSpinnerModule, ObSpinnerService } from '@oblique/oblique';
+import { ObIconModule, ObSpinnerModule, ObSpinnerService } from '@oblique/oblique';
 
 import { CubeItem } from '../model/cube-item';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
@@ -16,24 +16,21 @@ import { TranslateModule } from '@ngx-translate/core';
 import { FadeInOut } from '../../../core/animation/fade-in-out';
 
 @Component({
-  selector: 'cube-item-list',
-  standalone: true,
-  templateUrl: './item-list.component.html',
-  styleUrl: './item-list.component.scss',
-  imports: [
-    ReactiveFormsModule,
-    MatListModule,
-    MatFormField,
-    MatIconModule,
-    MatInputModule,
-    ObIconModule,
-    ObFormFieldModule,
-    ListItemComponent,
-    TranslateModule,
-    ObSpinnerModule
-  ],
-  animations: [FadeInOut(300, 200)],
-
+    selector: 'cube-item-list',
+    templateUrl: './item-list.component.html',
+    styleUrl: './item-list.component.scss',
+    imports: [
+        ReactiveFormsModule,
+        MatListModule,
+        MatFormField,
+        MatIconModule,
+        MatInputModule,
+        ObIconModule,
+        ListItemComponent,
+        TranslateModule,
+        ObSpinnerModule
+    ],
+    animations: [FadeInOut(300, 200)]
 })
 export class ItemListComponent {
   items = input.required<CubeItem[]>();

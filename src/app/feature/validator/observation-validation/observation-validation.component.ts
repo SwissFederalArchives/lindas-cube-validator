@@ -19,22 +19,21 @@ import { PlaygroundLinkComponent } from "../../../core/component/playground-link
 import { createPlaygroundUrl } from '@zazuko/shacl-playground';
 
 @Component({
-  selector: 'cube-observation-validation',
-  standalone: true,
-  templateUrl: './observation-validation.component.html',
-  styleUrl: './observation-validation.component.scss',
-  animations: [FadeInOut(300, 200)],
-  imports: [
-    ObSpinnerModule,
-    ValidationReportComponent,
-    ConformsIndicatorComponent,
-    MatIconModule,
-    MatButtonModule,
-    MatDialogModule,
-    ObButtonModule,
-    TranslateModule,
-    PlaygroundLinkComponent
-  ]
+    selector: 'cube-observation-validation',
+    templateUrl: './observation-validation.component.html',
+    styleUrl: './observation-validation.component.scss',
+    animations: [FadeInOut(300, 200)],
+    imports: [
+        ObSpinnerModule,
+        ValidationReportComponent,
+        ConformsIndicatorComponent,
+        MatIconModule,
+        MatButtonModule,
+        MatDialogModule,
+        ObButtonModule,
+        TranslateModule,
+        PlaygroundLinkComponent
+    ]
 })
 export class ObservationValidationComponent {
   cubeIri = input.required<string>();
@@ -128,16 +127,15 @@ export class ObservationValidationComponent {
 }
 
 @Component({
-  selector: 'dialog-elements-example-dialog',
-  templateUrl: './describe-observation-validation.html',
-  standalone: true,
-  imports: [
-    MatDialogTitle,
-    MatDialogContent,
-    MatDialogActions,
-    MatDialogClose,
-    MatButtonModule,
-    TranslateModule
-  ],
+    selector: 'dialog-elements-example-dialog',
+    templateUrl: './describe-observation-validation.html',
+    imports: [
+        MatDialogTitle,
+        MatDialogContent,
+        MatDialogActions,
+        MatDialogClose,
+        MatButtonModule,
+        TranslateModule
+    ]
 })
 export class DialogElementsExampleDialog { }

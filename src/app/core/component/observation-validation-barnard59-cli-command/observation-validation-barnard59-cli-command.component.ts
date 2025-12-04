@@ -8,17 +8,15 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { ObButtonModule, ObIconModule } from '@oblique/oblique';
 
 @Component({
-  selector: 'cube-observation-validation-barnard59-cli-command',
-  standalone: true,
-  imports: [
-    MatTooltipModule,
-    MatIconModule,
-    MatButtonModule,
-    ObButtonModule,
-    ObIconModule,
-
-  ], templateUrl: './observation-validation-barnard59-cli-command.component.html',
-  styleUrl: './observation-validation-barnard59-cli-command.component.scss'
+    selector: 'cube-observation-validation-barnard59-cli-command',
+    imports: [
+        MatTooltipModule,
+        MatIconModule,
+        MatButtonModule,
+        ObButtonModule,
+        ObIconModule,
+    ], templateUrl: './observation-validation-barnard59-cli-command.component.html',
+    styleUrl: './observation-validation-barnard59-cli-command.component.scss'
 })
 export class ObservationValidationBarnard59CliCommandComponent {
   endpoint = input.required<string>();

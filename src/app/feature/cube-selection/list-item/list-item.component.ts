@@ -5,11 +5,10 @@ import { ObLanguageModule } from '@oblique/oblique';
 import { MatCardModule } from '@angular/material/card';
 
 @Component({
-  selector: 'cube-list-item',
-  standalone: true,
-  imports: [MatTooltipModule, MatCardModule],
-  templateUrl: './list-item.component.html',
-  styleUrl: './list-item.component.scss'
+    selector: 'cube-list-item',
+    imports: [MatTooltipModule, MatCardModule],
+    templateUrl: './list-item.component.html',
+    styleUrl: './list-item.component.scss'
 })
 export class ListItemComponent {
   cube = input.required<CubeItem>();

@@ -9,11 +9,10 @@ import { NgClass } from '@angular/common';
  * This components maps SHACL severity to oblique severity (Batch Color). 
  */
 @Component({
-  selector: 'cube-severity',
-  standalone: true,
-  imports: [NgClass, MatChipsModule],
-  templateUrl: './severity.component.html',
-  styleUrl: './severity.component.scss'
+    selector: 'cube-severity',
+    imports: [NgClass, MatChipsModule],
+    templateUrl: './severity.component.html',
+    styleUrl: './severity.component.scss'
 })
 export class SeverityComponent {
   severity = input.required<string | undefined | null>();

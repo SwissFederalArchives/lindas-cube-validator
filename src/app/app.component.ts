@@ -2,9 +2,10 @@ import { Component, inject } from '@angular/core';
 import { ObMasterLayoutConfig } from '@oblique/oblique';
 
 @Component({
-  selector: 'cube-root',
-  templateUrl: './app.component.html',
-  styleUrl: './app.component.scss'
+    selector: 'cube-root',
+    templateUrl: './app.component.html',
+    styleUrl: './app.component.scss',
+    standalone: false
 })
 export class AppComponent {
   title = 'cube-validator';
