@@ -3,7 +3,7 @@ import { Observable, from, map, switchMap } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 import { rdfEnvironment } from '../../rdf/rdf-environment'
-import { Dataset } from '@zazuko/env/lib/DatasetExt';
+import { Dataset } from '@lindas/env/lib/DatasetExt';
 import { ValidationProfile } from '../../constant/validation-profile';
 import transform from 'rdf-transform-graph-imports'
 

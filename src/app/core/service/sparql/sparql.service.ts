@@ -4,7 +4,7 @@ import { SparqlResult } from './model/sparql-result-json';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 import { rdfEnvironment } from '../../rdf/rdf-environment'
-import { Dataset } from '@zazuko/env/lib/DatasetExt';
+import { Dataset } from '@lindas/env/lib/DatasetExt';
 import toStream from 'string-to-stream';
 
 // const RDF_MIME_TYPE = 'application/n-triples';

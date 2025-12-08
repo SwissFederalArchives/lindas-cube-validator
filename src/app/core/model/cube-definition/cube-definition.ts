@@ -1,5 +1,5 @@
-import { GraphPointer } from "clownface";
-import { ClownfaceObject } from "../../rdf/clownface-object";
+import { GraphPointer } from "@lindas/clownface";
+import { ClownfaceObject } from "../../rdf/@lindas/clownface-object";
 import { CubeDimension } from "../cube-dimension";
 import { cube, schema, sh } from "../../rdf/namespace";
 import { rdfEnvironment } from "../../rdf/rdf-environment";
@@ -128,8 +128,8 @@ export class CubeDefinition extends MultiLanguageCubeItem {
             properties: []
         };
 
-        const clownfaceObject = new ClownfaceObject(node);
-        const predicates = clownfaceObject.availablePredicates().map(p => rdfEnvironment.namedNode(p))
+        const @lindas/clownfaceObject = new ClownfaceObject(node);
+        const predicates = @lindas/clownfaceObject.availablePredicates().map(p => rdfEnvironment.namedNode(p))
         const properties = predicates.flatMap(predicateNode => {
             const what = node.out(predicateNode).map(n => {
                 return this.describeNode(predicateNode.value, n);

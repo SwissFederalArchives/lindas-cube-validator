@@ -14,9 +14,9 @@ import { ValidationReportComponent } from "../validation-report/validation-repor
 import { FadeInOut } from '../../../core/animation/fade-in-out';
 import { ConformsIndicatorComponent } from '../conforms-indicator/conforms-indicator.component';
 import { TranslateModule } from '@ngx-translate/core';
-import { Dataset } from '@zazuko/env/lib/Dataset';
+import { Dataset } from '@lindas/env/lib/Dataset';
 import { PlaygroundLinkComponent } from "../../../core/component/playground-link/playground-link.component";
-import { createPlaygroundUrl } from '@zazuko/shacl-playground';
+import { createPlaygroundUrl } from '@lindas/shacl-playground';
 
 @Component({
     selector: 'cube-observation-validation',

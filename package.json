@@ -24,8 +24,6 @@
     "@popperjs/core": "^2.0.0",
     "@rdfjs-elements/formats-pretty": "^0.6.7",
     "@rdfjs/fetch-lite": "^3.2.2",
-    "@zazuko/env": "^2.1.1",
-    "@zazuko/shacl-playground": "^2.0.0",
     "angular-oauth2-oidc": "^19.0.0",
     "buffer": "^6.0.3",
     "jwt-decode": "^4.0.0",
@@ -36,7 +34,9 @@
     "string-to-stream": "^3.0.1",
     "tslib": "^2.3.0",
     "util": "^0.12.5",
-    "zone.js": "~0.15.1"
+    "zone.js": "~0.15.1",
+    "@lindas/env": "^1.0.0",
+    "@lindas/shacl-playground": "^1.0.0"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "^19.2.19",

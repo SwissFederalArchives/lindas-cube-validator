@@ -21,7 +21,7 @@ import { CubeValidationComponent } from '../cube-validation/cube-validation.comp
 import { ObservationValidationComponent } from '../observation-validation/observation-validation.component';
 import { ValidationProfile } from '../../../core/constant/validation-profile';
 import { EndpointService } from '../../../core/service/endpoint/endpoint.service';
-import { Dataset } from '@zazuko/env/lib/DatasetExt';
+import { Dataset } from '@lindas/env/lib/DatasetExt';
 import { CubeDefinition } from '../../../core/model/cube-definition/cube-definition';
 import { rdfEnvironment } from '../../../core/rdf/rdf-environment';
 import { JsonPipe } from '@angular/common';
@@ -88,7 +88,7 @@ export class ValidatorComponent implements OnInit {
       })).pipe(
         filter(cubeInfo => cubeInfo !== null),
         switchMap(cubeInfo => this.#endpointService.getCube(cubeInfo!.endpoint, cubeInfo!.cubeIri)),
-        map(cubeResult => new CubeDefinition(rdfEnvironment.clownface({ dataset: cubeResult.dataset }).namedNode(this.cubeIri())))
+        map(cubeResult => new CubeDefinition(rdfEnvironment.@lindas/clownface({ dataset: cubeResult.dataset }).namedNode(this.cubeIri())))
       )
   );
 

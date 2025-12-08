@@ -1,5 +1,5 @@
-import { GraphPointer } from "clownface";
-import { ClownfaceObject } from "../../../rdf/clownface-object";
+import { GraphPointer } from "@lindas/clownface";
+import { ClownfaceObject } from "../../../rdf/@lindas/clownface-object";
 import { schema } from "../../../rdf/namespace";
 
 export class MultiLanguageCubeItem extends ClownfaceObject {

@@ -9,7 +9,7 @@ import { MultiLanguageCubeItem } from './model/cube-item';
 import { rdfEnvironment } from '../../rdf/rdf-environment';
 import { cube } from '../../rdf/namespace';
 import { getShapeGraphForCube } from './query/get-cube-shapes';
-import { Dataset } from '@zazuko/env/lib/DatasetExt';
+import { Dataset } from '@lindas/env/lib/DatasetExt';
 import Validator from 'rdf-validate-shacl';
 import ValidationReport from 'rdf-validate-shacl/src/validation-report';
 import { ValidationProfile } from '../../constant/validation-profile';
@@ -40,7 +40,7 @@ export class EndpointService {
     this.lastUsedEndpoint = endpointUrl;
     return this.sparqlService.construct(endpointUrl, CONSTRUCT_CUBE_ITEMS).pipe(
       map(cubeItemDataset => {
-        const cubeItems = rdfEnvironment.clownface({ dataset: cubeItemDataset.dataset }).node(cube['Cube']).in().map(node => new MultiLanguageCubeItem(node));
+        const cubeItems = rdfEnvironment.@lindas/clownface({ dataset: cubeItemDataset.dataset }).node(cube['Cube']).in().map(node => new MultiLanguageCubeItem(node));
         return cubeItems;
 
       }),
@@ -95,7 +95,7 @@ export class EndpointService {
    * @param shape the cube constraint dataset
    */
   private _updateDatasetWithTarget(shape: Dataset): void {
-    const constraint = rdfEnvironment.clownface({ dataset: shape, term: rdfEnvironment.namedNode('https://cube.link/Constraint') }).in(rdfEnvironment.ns.rdf.type)
+    const constraint = rdfEnvironment.@lindas/clownface({ dataset: shape, term: rdfEnvironment.namedNode('https://cube.link/Constraint') }).in(rdfEnvironment.ns.rdf.type)
     if (!constraint.term) {
       console.warn('could not find a constraint. This is means that the cube does not have a constraint. This is not a mistake but the cube is not validated against a constraint.');
       return;

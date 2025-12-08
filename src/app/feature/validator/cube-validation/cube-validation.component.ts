@@ -1,6 +1,6 @@
 import { Component, computed, input } from '@angular/core';
 
-import { createPlaygroundUrl } from '@zazuko/shacl-playground'
+import { createPlaygroundUrl } from '@lindas/shacl-playground'
 
 import { TranslateModule } from '@ngx-translate/core';
 
