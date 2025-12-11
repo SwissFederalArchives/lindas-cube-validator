@@ -1,6 +1,6 @@
-import { GraphPointer } from "@lindas/clownface";
+import { GraphPointer } from "clownface";
 
-import { ClownfaceObject } from "../../../../core/rdf/@lindas/clownface-object";
+import { ClownfaceObject } from "../../../../core/rdf/clownface-object";
 import { cube, rdf, sh } from "../../../../core/rdf/namespace";
 
 

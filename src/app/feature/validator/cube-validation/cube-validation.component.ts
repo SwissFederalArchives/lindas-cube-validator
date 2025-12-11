@@ -1,4 +1,4 @@
-import { Component, computed, input } from '@angular/core';
+import { Component, effect, input, signal } from '@angular/core';
 
 import { createPlaygroundUrl } from '@lindas/shacl-playground'
 
@@ -37,14 +37,18 @@ import { CubeValidationBarnard59CliCommandComponent } from '../../../core/compon
 })
 export class CubeValidationComponent {
   report = input.required<CubeValidationResult | undefined>();
+  playgroundLink = signal<string | undefined>(undefined);
 
-  playgroundLink = computed<string | undefined>(() => {
-    const report = this.report();
-    if (!report) {
-      return undefined;
-    }
-    const playgroundLink = createPlaygroundUrl(report.shapeGraph, report.dataGraph);
-    return playgroundLink;
-  });
-
+  constructor() {
+    effect(() => {
+      const report = this.report();
+      if (!report) {
+        this.playgroundLink.set(undefined);
+        return;
+      }
+      createPlaygroundUrl(report.shapeGraph, report.dataGraph).then(url => {
+        this.playgroundLink.set(url);
+      });
+    });
+  }
 }

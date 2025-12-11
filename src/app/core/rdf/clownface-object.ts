@@ -1,4 +1,4 @@
-import { GraphPointer } from '@lindas/clownface';
+import { GraphPointer } from 'clownface';
 
 import { rdfEnvironment } from './rdf-environment';
 

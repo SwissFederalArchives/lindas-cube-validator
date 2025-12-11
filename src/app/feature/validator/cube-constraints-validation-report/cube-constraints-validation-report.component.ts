@@ -52,8 +52,8 @@ export class CubeConstraintsValidationReportComponent {
       return [];
     }
 
-    const results = rdfEnvironment.@lindas/clownface({ dataset }).node(sh['ValidationResult']).in(rdf['type']).map(n => new ValidationResult(n)).filter(result => result.isAboutCube());
-    const resultCubeDetails = rdfEnvironment.@lindas/clownface({ dataset }).node(sh['ValidationResult']).in(rdf['type']).out(sh['detail']).map(n => new ValidationResult(n)).filter(result => result.isAboutCube());
+    const results = rdfEnvironment.clownface({ dataset }).node(sh['ValidationResult']).in(rdf['type']).map(n => new ValidationResult(n)).filter(result => result.isAboutCube());
+    const resultCubeDetails = rdfEnvironment.clownface({ dataset }).node(sh['ValidationResult']).in(rdf['type']).out(sh['detail']).map(n => new ValidationResult(n)).filter(result => result.isAboutCube());
     const resultWithDetails = [...results, ...resultCubeDetails];
     return resultWithDetails;
   }
@@ -66,7 +66,7 @@ export class CubeConstraintsValidationReportComponent {
       return [];
     }
 
-    const results = rdfEnvironment.@lindas/clownface({ dataset }).node(sh['ValidationResult']).in(rdf['type']).map(n => new ValidationResult(n)).filter(result => result.isAboutDimensions());
+    const results = rdfEnvironment.clownface({ dataset }).node(sh['ValidationResult']).in(rdf['type']).map(n => new ValidationResult(n)).filter(result => result.isAboutDimensions());
     const detailIris = results.flatMap(result => result.detail.map(detail => detail.iri));
     const resultWithDetails = results.filter(r => !detailIris.includes(r.iri)).flatMap(result => [result, ...result.detail]);
     return resultWithDetails;

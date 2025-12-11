@@ -1,5 +1,5 @@
-import { GraphPointer } from "@lindas/clownface";
-import { ClownfaceObject } from "../rdf/@lindas/clownface-object";
+import { GraphPointer } from "clownface";
+import { ClownfaceObject } from "../rdf/clownface-object";
 
 import { rdfEnvironment } from "../rdf/rdf-environment";
 import { cube, sh } from "../rdf/namespace";

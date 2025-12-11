@@ -1,4 +1,4 @@
-import { Component, DestroyRef, computed, effect, inject, input, signal } from '@angular/core';
+import { Component, DestroyRef, effect, inject, input, signal } from '@angular/core';
 import { ObSpinnerModule, ObSpinnerService } from '@oblique/oblique';
 import { EndpointService } from '../../../core/service/endpoint/endpoint.service';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
@@ -54,16 +54,22 @@ export class ObservationValidationComponent {
   private _report: ValidationReport | null = null;
   private readonly _reports: ValidationReport[] = [];
 
-  playgroundLink = computed<string | undefined>(() => {
-    const shapeGraph = this.#shapeGraph();
-    const dataGraph = this.#dataGraph();
-    if (!shapeGraph || !dataGraph) {
-      return undefined;
-    }
-    const playgroundLink = createPlaygroundUrl(shapeGraph, dataGraph);
-    return playgroundLink;
-  });
+  playgroundLink = signal<string | undefined>(undefined);
+
   constructor() {
+    // Update playground link when graphs change
+    effect(() => {
+      const shapeGraph = this.#shapeGraph();
+      const dataGraph = this.#dataGraph();
+      if (!shapeGraph || !dataGraph) {
+        this.playgroundLink.set(undefined);
+        return;
+      }
+      createPlaygroundUrl(shapeGraph, dataGraph).then(url => {
+        this.playgroundLink.set(url);
+      });
+    }, { allowSignalWrites: true });
+
     effect(() => {
       const cubeIri = this.cubeIri();
       const endpoint = this.endpoint();

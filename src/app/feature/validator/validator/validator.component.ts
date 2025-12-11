@@ -88,7 +88,7 @@ export class ValidatorComponent implements OnInit {
       })).pipe(
         filter(cubeInfo => cubeInfo !== null),
         switchMap(cubeInfo => this.#endpointService.getCube(cubeInfo!.endpoint, cubeInfo!.cubeIri)),
-        map(cubeResult => new CubeDefinition(rdfEnvironment.@lindas/clownface({ dataset: cubeResult.dataset }).namedNode(this.cubeIri())))
+        map(cubeResult => new CubeDefinition(rdfEnvironment.clownface({ dataset: cubeResult.dataset }).namedNode(this.cubeIri())))
       )
   );
 
