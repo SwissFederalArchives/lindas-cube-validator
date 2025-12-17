@@ -26,6 +26,11 @@
 - Solution: Added npm override in package.json to force get-stream ^8.0.0
 - Also added comprehensive proxy traps to @lindas/env-core extend() function for robustness
 
+**Replace @rdfjs-elements/formats-pretty with @lindas/formats-lazy**
+- @rdfjs-elements/formats-pretty depends on @graphy/* packages that require Node.js crypto
+- Created and use @lindas/formats-lazy (fork of @zazuko/formats-lazy) which is browser-compatible
+- This fixes "Failed to parse response" errors by properly registering RDF parsers
+
 ### 2025-12-11
 
 **`c3b64ec` - Fix import paths and async playground link handling for @lindas packages**
