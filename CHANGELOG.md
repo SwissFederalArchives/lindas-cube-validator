@@ -9,6 +9,13 @@
 
 ### 2025-12-17
 
+**Fix TypeScript type error with @lindas/formats-lazy**
+- Fixed TS2345 type error in rdf-environment.ts when importing formats
+- Root cause: malformed type declarations in @lindas/formats-lazy index.d.ts
+- The SinkMap generics were using invalid `import("events")<[never]>` syntax
+- Fixed by correcting types to use proper `EventEmitter` and `Stream` from @rdfjs/types
+- Removed unnecessary `as any` type cast in cube-validator code
+
 **Fix mat-form-field height for proper text display**
 - Angular Material MDC form fields had insufficient height causing input text to be clipped
 - Added CSS overrides for min-height, padding, and line-height in validator-input.component.scss
