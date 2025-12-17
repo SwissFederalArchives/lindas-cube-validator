@@ -19,11 +19,12 @@
 - Removed unused @rdfjs/formats import that was causing issues
 - Simplified rdf-environment.ts to use base formats from @lindas/env
 
-**Known Issue**
-- TypeError in RDF library initialization: "Cannot convert undefined or null to object"
-- This appears to be a pre-existing issue in the @lindas/env-core proxy-based environment extension
-- The error occurs when the lazy-loaded cube-selection module initializes the RDF environment
-- Further investigation needed in the @lindas/env-core extend.js proxy handlers
+**Fix TypeError in RDF environment initialization (RESOLVED)**
+- Fixed "TypeError: Cannot convert undefined or null to object at Object.getPrototypeOf"
+- Root cause: @sec-ant/readable-stream (transitive dependency from get-stream v9) uses
+  async generator patterns incompatible with Angular's esbuild bundler
+- Solution: Added npm override in package.json to force get-stream ^8.0.0
+- Also added comprehensive proxy traps to @lindas/env-core extend() function for robustness
 
 ### 2025-12-11
 

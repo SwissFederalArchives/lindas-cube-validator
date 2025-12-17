@@ -59,5 +59,8 @@
   },
   "browser": {
     "url": false
+  },
+  "overrides": {
+    "get-stream": "^8.0.0"
   }
 }
