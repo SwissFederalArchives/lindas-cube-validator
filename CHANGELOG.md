@@ -7,6 +7,14 @@
 
 ## December 2025
 
+### 2025-12-17
+
+**Fix WINDOW InjectionToken provider for Oblique 13**
+- Fixed runtime error: "NullInjectorError: No provider for InjectionToken Window"
+- Added explicit WINDOW token provider in app.module.ts
+- Breaking change in Oblique 13: modules no longer provide WINDOW token automatically
+- The WINDOW token is now manually provided using a factory function
+
 ### 2025-12-11
 
 **`c3b64ec` - Fix import paths and async playground link handling for @lindas packages**
@@ -97,4 +105,4 @@
 
 ---
 
-*Last updated: 2025-12-15*
+*Last updated: 2025-12-17*
