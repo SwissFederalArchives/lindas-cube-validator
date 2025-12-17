@@ -68,7 +68,7 @@ export class ObservationValidationComponent {
       createPlaygroundUrl(shapeGraph, dataGraph).then(url => {
         this.playgroundLink.set(url);
       });
-    }, { allowSignalWrites: true });
+    });
 
     effect(() => {
       const cubeIri = this.cubeIri();
@@ -121,7 +121,7 @@ export class ObservationValidationComponent {
           }
         }
       );
-    }, { allowSignalWrites: true });
+    });
 
   }
 

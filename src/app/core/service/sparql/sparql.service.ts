@@ -5,7 +5,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 import { rdfEnvironment } from '../../rdf/rdf-environment'
 import { Dataset } from '@lindas/env/lib/DatasetExt';
-import toStream from 'string-to-stream';
+import { stringToStream } from '../../util/string-to-stream';
 
 // const RDF_MIME_TYPE = 'application/n-triples';
 const RDF_MIME_TYPE = 'text/turtle';
@@ -62,7 +62,7 @@ export class SparqlService {
     return this.http.post(endpointUrl, body.toString(), options).pipe(
       switchMap(data => {
         serializedData = data;
-        const stream = toStream(data);
+        const stream = stringToStream(data);
         const quadStream = rdfEnvironment.formats.parsers.import(RDF_MIME_TYPE, stream)
         if (!quadStream) {
           throw new Error('Failed to parse response');

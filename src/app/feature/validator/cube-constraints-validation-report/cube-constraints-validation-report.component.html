@@ -16,7 +16,7 @@
             <h4>Cube Configuration</h4>
         </div>
         <table>
-            @for(triple of cubeValidationResult()[0].focusNode!.toTable();; track triple) {
+            @for(triple of cubeValidationResult()[0].focusNode!.toTable(); track triple.predicate + triple.object) {
 
             <tr class="triple-row">
                 <td>{{triple.predicate}}</td>
@@ -109,7 +109,7 @@
                 </div>
 
                 <table>
-                    @for(triple of result.objectValue?.toTable();; track triple) {
+                    @for(triple of result.objectValue?.toTable(); track triple.predicate + triple.object) {
 
                     <tr class="triple-row">
                         <td>{{triple.predicate}}</td>

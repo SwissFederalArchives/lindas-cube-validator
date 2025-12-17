@@ -9,6 +9,12 @@
 
 ### 2025-12-17
 
+**Fix console warnings in cube-validator**
+- Fixed NG0956 track by identity warning by using proper track expression in @for loops
+- Removed deprecated `allowSignalWrites` flag from effect() calls (no longer needed in Angular 19)
+- Replaced `string-to-stream` package with browser-compatible implementation using `stream-browserify`
+- Reduced util module externalization warnings from 4 to 1 (remaining from deep transitive dependency)
+
 **Fix TypeScript type error with @lindas/formats-lazy**
 - Fixed TS2345 type error in rdf-environment.ts when importing formats
 - Root cause: malformed type declarations in @lindas/formats-lazy index.d.ts

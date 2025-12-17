@@ -63,7 +63,7 @@ export class ProfileSelectorComponent {
       } else {
         this.showList.set(true);
       }
-    }, { allowSignalWrites: true });
+    });
   }
   selectionChanged(event: MatSelectChange): void {
     // find the profile by value

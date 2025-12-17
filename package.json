@@ -31,7 +31,6 @@
     "rdf-transform-graph-imports": "^0.2.3",
     "rdf-validate-shacl": "^0.5.5",
     "rxjs": "~7.8.0",
-    "string-to-stream": "^3.0.1",
     "tslib": "^2.3.0",
     "util": "^0.12.5",
     "zone.js": "~0.15.1"
