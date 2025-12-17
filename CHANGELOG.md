@@ -9,6 +9,11 @@
 
 ### 2025-12-17
 
+**Fix mat-form-field height for proper text display**
+- Angular Material MDC form fields had insufficient height causing input text to be clipped
+- Added CSS overrides for min-height, padding, and line-height in validator-input.component.scss
+- Ensures SPARQL endpoint URL and other inputs display properly
+
 **Fix WINDOW InjectionToken provider for Oblique 13**
 - Fixed runtime error: "NullInjectorError: No provider for InjectionToken Window"
 - Added explicit WINDOW token provider in app.module.ts
