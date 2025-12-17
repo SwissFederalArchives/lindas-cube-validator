@@ -15,6 +15,16 @@
 - Breaking change in Oblique 13: modules no longer provide WINDOW token automatically
 - The WINDOW token is now manually provided using a factory function
 
+**Clean up RDF environment configuration**
+- Removed unused @rdfjs/formats import that was causing issues
+- Simplified rdf-environment.ts to use base formats from @lindas/env
+
+**Known Issue**
+- TypeError in RDF library initialization: "Cannot convert undefined or null to object"
+- This appears to be a pre-existing issue in the @lindas/env-core proxy-based environment extension
+- The error occurs when the lazy-loaded cube-selection module initializes the RDF environment
+- Further investigation needed in the @lindas/env-core extend.js proxy handlers
+
 ### 2025-12-11
 
 **`c3b64ec` - Fix import paths and async playground link handling for @lindas packages**
