@@ -5,6 +5,16 @@
 
 ---
 
+## February 2026
+
+### 2026-02-03
+
+**Version 1.0.0 - Initial versioning**
+- Initialized proper semantic versioning at 1.0.0 (was 0.0.0)
+- Added CODEOWNERS file (`@giulio-vannini @psiotwo`)
+
+---
+
 ## January 2026
 
 ### 2026-01-23
