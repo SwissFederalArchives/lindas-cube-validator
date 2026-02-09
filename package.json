@@ -41,8 +41,8 @@
     "@angular/compiler-cli": "^19.2.17",
     "@types/clownface": "^2.0.7",
     "@types/get-stream": "^3.0.2",
-    "@types/jasmine": "~5.1.0",
-    "@types/node": "^20.12.12",
+    "@types/jasmine": "~6.0.0",
+    "@types/node": "^25.2.2",
     "@types/rdf-validate-shacl": "^0.4.7",
     "@types/rdfjs__fetch-lite": "^3.0.10",
     "buffer": "^6.0.3",
@@ -54,7 +54,7 @@
     "karma-jasmine-html-reporter": "~2.1.0",
     "process": "^0.11.10",
     "stream-browserify": "^3.0.0",
-    "typescript": "~5.8.3"
+    "typescript": "~5.9.3"
   },
   "browser": {
     "url": false
