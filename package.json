@@ -23,7 +23,7 @@
     "@lindas/formats-lazy": "^1.0.2",
     "@lindas/shacl-playground": "^3.0.1",
     "@ngx-translate/core": "^16.0.4",
-    "@oblique/oblique": "^13.3.3",
+    "@oblique/oblique": "^15.0.0",
     "@popperjs/core": "^2.0.0",
     "@rdfjs/fetch-lite": "^3.2.2",
     "angular-oauth2-oidc": "^19.0.0",
