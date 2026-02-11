@@ -19,7 +19,7 @@ import { CubeItem } from '../model/cube-item';
 import { ItemListComponent } from "../item-list/item-list.component";
 import { CubeInfo } from '../cube-selector/cube-selector.component';
 
-const DEFAULT_ENDPOINT = 'https://lindas.admin.ch/query';
+const DEFAULT_ENDPOINT = 'https://lindas.test.cz-aws.net/query';
 
 @Component({
     selector: 'cube-validator-input',
