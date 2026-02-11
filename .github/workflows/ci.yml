@@ -3,12 +3,12 @@ name: CI
 on:
   push:
     branches:
-      - main
-      - develop
+      - main-graphdb
+      - develop-graphdb
   pull_request:
     branches:
-      - main
-      - develop
+      - main-graphdb
+      - develop-graphdb
 
 jobs:
   build:

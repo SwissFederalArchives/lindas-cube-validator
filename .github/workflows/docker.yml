@@ -3,11 +3,11 @@ name: Build and Deploy to TEST
 on:
   push:
     branches:
-      - main
+      - main-graphdb
   pull_request:
     branches:
-      - main
-      - develop
+      - main-graphdb
+      - develop-graphdb
 
 env:
   REGISTRY: ghcr.io
@@ -69,20 +69,20 @@ jobs:
       - name: Save current TEST as previous
         if: ${{ github.event_name != 'pull_request' }}
         run: |
-          if docker pull $REGISTRY/$IMAGE_NAME:test 2>/dev/null; then
-            echo "Saving current 'test' as 'test-previous'"
-            docker tag $REGISTRY/$IMAGE_NAME:test $REGISTRY/$IMAGE_NAME:test-previous
-            docker push $REGISTRY/$IMAGE_NAME:test-previous
+          if docker pull $REGISTRY/$IMAGE_NAME:graphdb-test 2>/dev/null; then
+            echo "Saving current 'graphdb-test' as 'graphdb-test-previous'"
+            docker tag $REGISTRY/$IMAGE_NAME:graphdb-test $REGISTRY/$IMAGE_NAME:graphdb-test-previous
+            docker push $REGISTRY/$IMAGE_NAME:graphdb-test-previous
           else
-            echo "No existing 'test' tag to save"
+            echo "No existing 'graphdb-test' tag to save"
           fi
 
       - name: Deploy to TEST
         if: ${{ github.event_name != 'pull_request' }}
         run: |
           docker pull $REGISTRY/$IMAGE_NAME:${{ steps.version.outputs.version }}
-          docker tag $REGISTRY/$IMAGE_NAME:${{ steps.version.outputs.version }} $REGISTRY/$IMAGE_NAME:test
-          docker push $REGISTRY/$IMAGE_NAME:test
+          docker tag $REGISTRY/$IMAGE_NAME:${{ steps.version.outputs.version }} $REGISTRY/$IMAGE_NAME:graphdb-test
+          docker push $REGISTRY/$IMAGE_NAME:graphdb-test
           echo "Deployed ${{ steps.version.outputs.version }} to TEST"
 
       - name: Summary
@@ -94,7 +94,7 @@ jobs:
           echo "|-----|-------------|" >> $GITHUB_STEP_SUMMARY
           echo "| \`${{ steps.version.outputs.version }}\` | Version tag (immutable) |" >> $GITHUB_STEP_SUMMARY
           echo "| \`${{ steps.tags.outputs.sha_tag }}\` | SHA tag (immutable) |" >> $GITHUB_STEP_SUMMARY
-          echo "| \`test\` | TEST environment |" >> $GITHUB_STEP_SUMMARY
-          echo "| \`test-previous\` | Previous TEST version |" >> $GITHUB_STEP_SUMMARY
+          echo "| \`graphdb-test\` | TEST environment |" >> $GITHUB_STEP_SUMMARY
+          echo "| \`graphdb-test-previous\` | Previous TEST version |" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "To promote: Run **Deploy to INT** workflow with version \`${{ steps.version.outputs.version }}\`" >> $GITHUB_STEP_SUMMARY

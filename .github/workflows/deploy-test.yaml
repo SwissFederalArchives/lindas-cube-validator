@@ -30,12 +30,12 @@ jobs:
 
       - name: Save current as previous
         run: |
-          if docker pull $REGISTRY/$IMAGE_NAME:test 2>/dev/null; then
-            echo "Saving current 'test' as 'test-previous'"
-            docker tag $REGISTRY/$IMAGE_NAME:test $REGISTRY/$IMAGE_NAME:test-previous
-            docker push $REGISTRY/$IMAGE_NAME:test-previous
+          if docker pull $REGISTRY/$IMAGE_NAME:graphdb-test 2>/dev/null; then
+            echo "Saving current 'graphdb-test' as 'graphdb-test-previous'"
+            docker tag $REGISTRY/$IMAGE_NAME:graphdb-test $REGISTRY/$IMAGE_NAME:graphdb-test-previous
+            docker push $REGISTRY/$IMAGE_NAME:graphdb-test-previous
           else
-            echo "No existing 'test' tag to save"
+            echo "No existing 'graphdb-test' tag to save"
           fi
 
       - name: Pull version image
@@ -43,11 +43,11 @@ jobs:
           echo "Pulling $REGISTRY/$IMAGE_NAME:${{ github.event.inputs.version }}"
           docker pull $REGISTRY/$IMAGE_NAME:${{ github.event.inputs.version }}
 
-      - name: Tag as test
+      - name: Tag as graphdb-test
         run: |
-          docker tag $REGISTRY/$IMAGE_NAME:${{ github.event.inputs.version }} $REGISTRY/$IMAGE_NAME:test
-          docker push $REGISTRY/$IMAGE_NAME:test
-          echo "Tagged ${{ github.event.inputs.version }} as test"
+          docker tag $REGISTRY/$IMAGE_NAME:${{ github.event.inputs.version }} $REGISTRY/$IMAGE_NAME:graphdb-test
+          docker push $REGISTRY/$IMAGE_NAME:graphdb-test
+          echo "Tagged ${{ github.event.inputs.version }} as graphdb-test"
 
       - name: Summary
         run: |
@@ -55,7 +55,7 @@ jobs:
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "| Tag | Version |" >> $GITHUB_STEP_SUMMARY
           echo "|-----|---------|" >> $GITHUB_STEP_SUMMARY
-          echo "| \`test\` | \`${{ github.event.inputs.version }}\` |" >> $GITHUB_STEP_SUMMARY
-          echo "| \`test-previous\` | (previous version) |" >> $GITHUB_STEP_SUMMARY
+          echo "| \`graphdb-test\` | \`${{ github.event.inputs.version }}\` |" >> $GITHUB_STEP_SUMMARY
+          echo "| \`graphdb-test-previous\` | (previous version) |" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "To rollback: Run **Rollback TEST** workflow" >> $GITHUB_STEP_SUMMARY
