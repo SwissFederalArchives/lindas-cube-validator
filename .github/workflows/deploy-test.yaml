@@ -1,0 +1,61 @@
+name: Deploy to TEST
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Version to deploy (e.g., 0.1.0)'
+        required: true
+        type: string
+
+env:
+  REGISTRY: ghcr.io
+  IMAGE_NAME: swissfederalarchives/lindas-cube-validator
+
+jobs:
+  deploy:
+    name: Deploy to TEST
+    runs-on: ubuntu-latest
+
+    permissions:
+      packages: write
+
+    steps:
+      - name: Login to GitHub Container Registry
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Save current as previous
+        run: |
+          if docker pull $REGISTRY/$IMAGE_NAME:graphdb-test 2>/dev/null; then
+            echo "Saving current 'graphdb-test' as 'graphdb-test-previous'"
+            docker tag $REGISTRY/$IMAGE_NAME:graphdb-test $REGISTRY/$IMAGE_NAME:graphdb-test-previous
+            docker push $REGISTRY/$IMAGE_NAME:graphdb-test-previous
+          else
+            echo "No existing 'graphdb-test' tag to save"
+          fi
+
+      - name: Pull version image
+        run: |
+          echo "Pulling $REGISTRY/$IMAGE_NAME:${{ github.event.inputs.version }}"
+          docker pull $REGISTRY/$IMAGE_NAME:${{ github.event.inputs.version }}
+
+      - name: Tag as graphdb-test
+        run: |
+          docker tag $REGISTRY/$IMAGE_NAME:${{ github.event.inputs.version }} $REGISTRY/$IMAGE_NAME:graphdb-test
+          docker push $REGISTRY/$IMAGE_NAME:graphdb-test
+          echo "Tagged ${{ github.event.inputs.version }} as graphdb-test"
+
+      - name: Summary
+        run: |
+          echo "## Deployed to TEST" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "| Tag | Version |" >> $GITHUB_STEP_SUMMARY
+          echo "|-----|---------|" >> $GITHUB_STEP_SUMMARY
+          echo "| \`graphdb-test\` | \`${{ github.event.inputs.version }}\` |" >> $GITHUB_STEP_SUMMARY
+          echo "| \`graphdb-test-previous\` | (previous version) |" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "To rollback: Run **Rollback TEST** workflow" >> $GITHUB_STEP_SUMMARY
