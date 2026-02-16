@@ -11,9 +11,11 @@ describe('ObservationValidationBarnard59CliCommandComponent', () => {
       imports: [ObservationValidationBarnard59CliCommandComponent]
     })
     .compileComponents();
-    
+
     fixture = TestBed.createComponent(ObservationValidationBarnard59CliCommandComponent);
     component = fixture.componentInstance;
+    fixture.componentRef.setInput('endpoint', 'https://example.org/query');
+    fixture.componentRef.setInput('cubeIri', 'https://example.org/cube/1');
     fixture.detectChanges();
   });
 

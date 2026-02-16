@@ -11,9 +11,10 @@ describe('SeverityComponent', () => {
       imports: [SeverityComponent]
     })
     .compileComponents();
-    
+
     fixture = TestBed.createComponent(SeverityComponent);
     component = fixture.componentInstance;
+    fixture.componentRef.setInput('severity', null);
     fixture.detectChanges();
   });
 

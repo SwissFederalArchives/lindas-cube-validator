@@ -11,9 +11,16 @@ describe('ListItemComponent', () => {
       imports: [ListItemComponent]
     })
     .compileComponents();
-    
+
     fixture = TestBed.createComponent(ListItemComponent);
     component = fixture.componentInstance;
+    fixture.componentRef.setInput('cube', {
+      name: 'Test Cube',
+      iri: 'https://example.org/cube/1',
+      description: 'A test cube',
+      datePublished: '2024-01-01',
+      searchField: 'test cube'
+    });
     fixture.detectChanges();
   });
 
