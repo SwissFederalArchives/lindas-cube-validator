@@ -11,9 +11,10 @@ describe('PlaygroundLinkComponent', () => {
       imports: [PlaygroundLinkComponent]
     })
     .compileComponents();
-    
+
     fixture = TestBed.createComponent(PlaygroundLinkComponent);
     component = fixture.componentInstance;
+    fixture.componentRef.setInput('playgroundLink', undefined);
     fixture.detectChanges();
   });
 

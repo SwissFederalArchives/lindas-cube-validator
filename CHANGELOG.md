@@ -5,6 +5,28 @@
 
 ---
 
+## February 2026
+
+### 2026-02-16
+
+**Fix all 22 failing unit tests**
+- Fixed 20 spec files that were never updated for the actual component implementations
+- Added missing providers: ActivatedRoute (provideRouter), HttpClient (provideHttpClientTesting), TranslateModule, ObSpinnerService
+- Set required Angular signal inputs (input.required) before detectChanges()
+- Added CUSTOM_ELEMENTS_SCHEMA for Oblique components
+- All tests now pass: 22 of 22 SUCCESS
+
+### 2026-02-15
+
+**Add promote/rollback workflow**
+- Added `promote.yaml` workflow via `workflow_dispatch`
+  - Action dropdown: promote, rollback-test, rollback-int, rollback-prod
+  - Promote: retags source image as `int_YYYY-MM-DD_HHMMSS` then `prod_YYYY-MM-DD_HHMMSS`
+  - Rollback: retags a previous image with a new timestamp so Flux picks it up
+  - Uses `docker buildx imagetools create` for zero-layer-pull retagging (no rebuild)
+
+---
+
 ## December 2025
 
 ### 2025-12-17
