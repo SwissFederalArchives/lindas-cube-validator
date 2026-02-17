@@ -7,6 +7,13 @@
 
 ## February 2026
 
+### 2026-02-17
+
+**Standardize Docker image tag naming**
+- Changed CI tag format from `branch-main-YYYYMMDDHHmmss` to `test_YYYY-MM-DD_HHmmss`
+- Updated promote/rollback workflow to use `test_*` tags for TEST rollback
+- Aligned with naming convention used across all LINDAS services
+
 ### 2026-02-16
 
 **Fix all 22 failing unit tests**
