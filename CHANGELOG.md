@@ -5,6 +5,17 @@
 
 ---
 
+## March 2026
+
+### 2026-03-02
+
+**Change Docker build tags from test_* to prod_* for production**
+- Since cube-validator only has a production environment, the main branch build now produces `prod_*` tags directly
+- Changed `test_YYYY-MM-DD_HHmmss` to `prod_YYYY-MM-DD_HHmmss` in `.github/workflows/docker.yml`
+- This allows Flux to pick up new images automatically without needing the promote workflow
+
+---
+
 ## February 2026
 
 ### 2026-02-17
@@ -169,4 +180,4 @@
 
 ---
 
-*Last updated: 2025-12-17*
+*Last updated: 2026-03-02*
