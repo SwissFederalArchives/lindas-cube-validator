@@ -5,41 +5,50 @@
 
 ---
 
-## February 2026
+## March 2026
 
-### 2026-02-03
+### 2026-03-02
 
-**Version 1.0.0 - Initial versioning**
-- Initialized proper semantic versioning at 1.0.0 (was 0.0.0)
-- Added CODEOWNERS file (`@giulio-vannini @psiotwo`)
+**Change Docker build tags from test_* to prod_* for production**
+- Since cube-validator only has a production environment, the main branch build now produces `prod_*` tags directly
+- Changed `test_YYYY-MM-DD_HHmmss` to `prod_YYYY-MM-DD_HHmmss` in `.github/workflows/docker.yml`
+- This allows Flux to pick up new images automatically without needing the promote workflow
 
 ---
 
-## January 2026
+## February 2026
 
-### 2026-01-23
+### 2026-02-23
 
-**DevOps Workflow Implementation - Build Once, Deploy Anywhere**
-- Created `develop` branch for code review workflow
-- Updated CI workflow to trigger on develop branch and PRs
-- Rewrote Docker workflow for immutable version tags:
-  - Build on main push creates `{version}` and `sha-{hash}` tags
-  - **Automatic deployment to TEST** after successful build
-  - Saves previous TEST version as `test-previous` for rollback
-- Added `deploy-test.yaml`: Deploy any version to TEST (manual override)
-- Added `deploy-int.yaml`: Promote any version to INT (manual trigger)
-- Added `deploy-prod.yaml`: Promote any version to PROD (requires approval)
-- Added one-click rollback workflows:
-  - `rollback-test.yaml`: Swap test/test-previous (one click)
-  - `rollback-int.yaml`: Swap int/int-previous (one click)
-  - `rollback-prod.yaml`: Swap prod/prod-previous (requires approval)
+**Simplify deployment: build prod_* images directly**
+- Changed CI tag format from `test_YYYY-MM-DD_HHmmss` to `prod_YYYY-MM-DD_HHmmss`
+- Removed promotion workflow (`promote.yaml`) — no longer needed as this service has a single deployment environment
+- Flux ImagePolicy in gitops-main updated to watch `prod_*` tags directly
 
-**Image Tag Pattern:**
-- `{version}` - Immutable version tag (0.0.0, 0.1.0, etc.)
-- `sha-{hash}` - Immutable SHA reference
-- `test`, `test-previous` - TEST environment (current/rollback)
-- `int`, `int-previous` - INT environment (current/rollback)
-- `prod`, `prod-previous` - PROD environment (current/rollback)
+### 2026-02-17
+
+**Standardize Docker image tag naming**
+- Changed CI tag format from `branch-main-YYYYMMDDHHmmss` to `test_YYYY-MM-DD_HHmmss`
+- Updated promote/rollback workflow to use `test_*` tags for TEST rollback
+- Aligned with naming convention used across all LINDAS services
+
+### 2026-02-16
+
+**Fix all 22 failing unit tests**
+- Fixed 20 spec files that were never updated for the actual component implementations
+- Added missing providers: ActivatedRoute (provideRouter), HttpClient (provideHttpClientTesting), TranslateModule, ObSpinnerService
+- Set required Angular signal inputs (input.required) before detectChanges()
+- Added CUSTOM_ELEMENTS_SCHEMA for Oblique components
+- All tests now pass: 22 of 22 SUCCESS
+
+### 2026-02-15
+
+**Add promote/rollback workflow**
+- Added `promote.yaml` workflow via `workflow_dispatch`
+  - Action dropdown: promote, rollback-test, rollback-int, rollback-prod
+  - Promote: retags source image as `int_YYYY-MM-DD_HHMMSS` then `prod_YYYY-MM-DD_HHMMSS`
+  - Rollback: retags a previous image with a new timestamp so Flux picks it up
+  - Uses `docker buildx imagetools create` for zero-layer-pull retagging (no rebuild)
 
 ---
 
@@ -178,4 +187,4 @@
 
 ---
 
-*Last updated: 2026-01-23*
+*Last updated: 2026-03-02*

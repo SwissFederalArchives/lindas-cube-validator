@@ -11,9 +11,10 @@ describe('ConformsIndicatorComponent', () => {
       imports: [ConformsIndicatorComponent]
     })
     .compileComponents();
-    
+
     fixture = TestBed.createComponent(ConformsIndicatorComponent);
     component = fixture.componentInstance;
+    fixture.componentRef.setInput('conforms', true);
     fixture.detectChanges();
   });
 
