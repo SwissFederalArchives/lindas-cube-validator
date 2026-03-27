@@ -4,11 +4,9 @@ on:
   push:
     branches:
       - main-graphdb
-      - develop-graphdb
   pull_request:
     branches:
       - main-graphdb
-      - develop-graphdb
 
 jobs:
   build:

@@ -7,7 +7,6 @@ on:
   pull_request:
     branches:
       - main-graphdb
-      - develop-graphdb
 
 env:
   REGISTRY: ghcr.io
