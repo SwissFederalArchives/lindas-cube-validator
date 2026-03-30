@@ -2,7 +2,11 @@ name: CI
 
 on:
   push:
+    branches:
+      - main-graphdb
   pull_request:
+    branches:
+      - main-graphdb
 
 jobs:
   build:

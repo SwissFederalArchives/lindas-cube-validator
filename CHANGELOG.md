@@ -7,6 +7,16 @@
 
 ## March 2026
 
+### 2026-03-27
+
+**CI cleanup (PR #52 review feedback from Petr Kremer)**
+- `ci.yml`: Removed `develop-graphdb` from push and pull_request branch filters (trunk-based, only `main-graphdb` needed).
+- `docker.yml`: Removed `develop-graphdb` from pull_request branch filter.
+
+---
+
+## February 2026
+
 ### 2026-03-02
 
 **Change Docker build tags from test_* to prod_* for production**
