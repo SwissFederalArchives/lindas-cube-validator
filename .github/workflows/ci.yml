@@ -28,6 +28,9 @@ jobs:
       - name: Build
         run: npm run build
 
+      - name: Run tests
+        run: npx ng test --watch=false --browsers=ChromeHeadless
+
       - name: Upload build artifacts
         uses: actions/upload-artifact@v4
         with:
